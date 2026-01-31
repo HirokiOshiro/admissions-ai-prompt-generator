@@ -18,6 +18,26 @@
             </p>
         </header>
 
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <span class="step-label">Your Info</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <span class="step-label">Question</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <span class="step-label">Result</span>
+                </div>
+            </div>
+        </div>
+
         <!-- Main Form -->
         <main class="main">
             <form id="promptForm" class="form">
@@ -167,13 +187,16 @@
                 </h2>
                 
                 <div class="prompt-container">
-                    <div class="prompt-text" id="generatedPrompt"></div>
-                    <div class="prompt-actions">
-                        <button type="button" class="btn btn-copy" id="copyBtn">
-                            <span class="copy-icon">📋</span> Copy to Clipboard
+                    <div class="prompt-wrapper">
+                        <button type="button" class="btn btn-copy btn-copy-floating" id="copyBtn" aria-label="Copy prompt to clipboard">
+                            <span class="copy-icon">📋</span>
+                            <span class="copy-text">Copy</span>
                         </button>
+                        <div class="prompt-text" id="generatedPrompt"></div>
+                    </div>
+                    <div class="prompt-actions">
                         <button type="button" class="btn btn-secondary" id="editBtn">
-                            ↑ Edit Your Input
+                            ← Edit Your Input
                         </button>
                     </div>
                 </div>

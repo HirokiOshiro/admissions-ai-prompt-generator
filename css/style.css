@@ -56,7 +56,7 @@ body {
     background: linear-gradient(135deg, var(--primary-color) 0%, #a01010 100%);
     color: white;
     border-radius: var(--border-radius);
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .header h1 {
@@ -77,6 +77,93 @@ body {
     opacity: 0.9;
     max-width: 500px;
     margin: 0 auto;
+}
+
+/* ========================================
+   Progress Bar
+======================================== */
+.progress-container {
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg) var(--spacing-md);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow);
+}
+
+.progress-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+}
+
+.progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-xs);
+    position: relative;
+}
+
+.step-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+    border: 2px solid var(--border-color);
+}
+
+.progress-step.active .step-circle {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.progress-step.completed .step-circle {
+    background-color: var(--success-color);
+    color: white;
+    border-color: var(--success-color);
+}
+
+.progress-step.completed .step-circle::after {
+    content: "✓";
+    font-size: 1rem;
+}
+
+.progress-step.completed .step-circle {
+    font-size: 0;
+}
+
+.step-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.progress-step.active .step-label,
+.progress-step.completed .step-label {
+    color: var(--text-color);
+}
+
+.progress-line {
+    width: 60px;
+    height: 3px;
+    background-color: var(--border-color);
+    margin: 0 var(--spacing-sm);
+    margin-bottom: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.progress-line.active {
+    background-color: var(--success-color);
 }
 
 /* ========================================
@@ -155,7 +242,19 @@ input:focus,
 textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.1);
+    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.2);
+}
+
+/* Enhanced focus styles for accessibility */
+.btn:focus,
+.checkbox-label input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(139, 0, 0, 0.3);
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 textarea {
@@ -279,10 +378,15 @@ textarea {
     margin-bottom: var(--spacing-lg);
 }
 
+.prompt-wrapper {
+    position: relative;
+}
+
 .prompt-text {
     background-color: #1a202c;
     color: #e2e8f0;
     padding: var(--spacing-lg);
+    padding-top: calc(var(--spacing-lg) + 40px);
     border-radius: var(--border-radius);
     font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
     font-size: 0.85rem;
@@ -291,13 +395,40 @@ textarea {
     word-wrap: break-word;
     max-height: 500px;
     overflow-y: auto;
-    margin-bottom: var(--spacing-md);
+}
+
+/* Floating copy button */
+.btn-copy-floating {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    z-index: 10;
+    transition: all 0.2s ease;
+}
+
+.btn-copy-floating .copy-text {
+    display: inline;
+}
+
+.btn-copy-floating.copied {
+    background-color: #276749;
+}
+
+.btn-copy-floating .copy-icon {
+    transition: transform 0.2s ease;
+}
+
+.btn-copy-floating:hover .copy-icon {
+    transform: scale(1.1);
 }
 
 .prompt-actions {
     display: flex;
     gap: var(--spacing-md);
     flex-wrap: wrap;
+    margin-top: var(--spacing-md);
 }
 
 /* ========================================
@@ -473,5 +604,27 @@ textarea {
     .prompt-text {
         font-size: 0.75rem;
         padding: var(--spacing-md);
+        padding-top: calc(var(--spacing-md) + 40px);
+    }
+
+    /* Progress bar responsive */
+    .progress-line {
+        width: 30px;
+    }
+
+    .step-label {
+        font-size: 0.65rem;
+    }
+
+    .step-circle {
+        width: 30px;
+        height: 30px;
+        font-size: 0.8rem;
+    }
+
+    /* Copy button responsive */
+    .btn-copy-floating {
+        padding: 0.4rem 0.75rem;
+        font-size: 0.75rem;
     }
 }

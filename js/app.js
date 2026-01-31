@@ -32,6 +32,10 @@ const nationalitySelect = document.getElementById('nationality');
 const nationalityOther = document.getElementById('nationalityOther');
 const categoryError = document.getElementById('categoryError');
 
+// Progress bar elements
+const progressSteps = document.querySelectorAll('.progress-step');
+const progressLines = document.querySelectorAll('.progress-line');
+
 // ========================================
 // Event Listeners
 // ========================================
@@ -47,6 +51,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Nationality "Other" toggle
     nationalitySelect.addEventListener('change', handleNationalityChange);
+
+    // Track form section focus for progress bar
+    trackFormProgress();
 });
 
 // ========================================
@@ -71,6 +78,9 @@ function handleFormSubmit(e) {
 
     // Display prompt
     displayPrompt(prompt);
+
+    // Update progress to step 3 (completed)
+    updateProgress(3);
 }
 
 function handleCopy() {
@@ -78,10 +88,14 @@ function handleCopy() {
     
     navigator.clipboard.writeText(promptText)
         .then(() => {
+            // Enhanced feedback
+            copyBtn.classList.add('copied');
+            copyBtn.innerHTML = '<span class="copy-icon">✓</span><span class="copy-text">Copied!</span>';
             showToast('Copied to clipboard!');
-            copyBtn.innerHTML = '<span class="copy-icon">✓</span> Copied!';
+            
             setTimeout(() => {
-                copyBtn.innerHTML = '<span class="copy-icon">📋</span> Copy to Clipboard';
+                copyBtn.classList.remove('copied');
+                copyBtn.innerHTML = '<span class="copy-icon">📋</span><span class="copy-text">Copy</span>';
             }, 2000);
         })
         .catch(err => {
@@ -92,6 +106,8 @@ function handleCopy() {
 
 function handleEdit() {
     promptOutput.classList.add('hidden');
+    // Reset progress to step 1
+    updateProgress(1);
     form.scrollIntoView({ behavior: 'smooth' });
 }
 
@@ -231,4 +247,65 @@ function showToast(message) {
             toast.classList.add('hidden');
         }, 300);
     }, 2000);
+}
+
+// ========================================
+// Progress Bar Functions
+// ========================================
+function updateProgress(step) {
+    progressSteps.forEach((stepEl, index) => {
+        const stepNum = index + 1;
+        
+        if (stepNum < step) {
+            // Completed steps
+            stepEl.classList.remove('active');
+            stepEl.classList.add('completed');
+        } else if (stepNum === step) {
+            // Current step
+            stepEl.classList.add('active');
+            stepEl.classList.remove('completed');
+        } else {
+            // Future steps
+            stepEl.classList.remove('active', 'completed');
+        }
+    });
+
+    // Update progress lines
+    progressLines.forEach((line, index) => {
+        if (index < step - 1) {
+            line.classList.add('active');
+        } else {
+            line.classList.remove('active');
+        }
+    });
+}
+
+function trackFormProgress() {
+    // Step 1 fields
+    const step1Fields = ['program', 'nationality', 'educationStatus', 'educationYears'];
+    // Step 2 fields
+    const step2Container = document.querySelector('.form-section:nth-of-type(2)');
+
+    step1Fields.forEach(fieldId => {
+        const field = document.getElementById(fieldId);
+        if (field) {
+            field.addEventListener('focus', () => updateProgress(1));
+        }
+    });
+
+    if (step2Container) {
+        step2Container.addEventListener('focusin', () => updateProgress(2));
+    }
+
+    // Category checkboxes
+    const categoryCheckboxes = document.querySelectorAll('input[name="category"]');
+    categoryCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => updateProgress(2));
+    });
+
+    // Specific question textarea
+    const specificQuestion = document.getElementById('specificQuestion');
+    if (specificQuestion) {
+        specificQuestion.addEventListener('focus', () => updateProgress(2));
+    }
 }
