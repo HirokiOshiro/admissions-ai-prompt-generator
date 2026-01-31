@@ -21,7 +21,7 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 - **Auto-save**: Your inputs are automatically saved and restored
 - **Reset buttons**: Clear individual sections or all data
 - **Collapsible user guide**: Learn how to use the tool
-- **Privacy-focused**: All data stays in your browser (LocalStorage only)
+- **Simple & Safe**: No registration required, form data saved locally for convenience
 - **Mobile-friendly**: Responsive design works on any device
 - **International sensitivity**: Supports Hong Kong (SAR), Macau (SAR), and separates citizenship from residence
 
@@ -85,11 +85,12 @@ open index.html
 
 ## 📋 Version History
 
-**Current Version: v1.3.1** (January 31, 2026)
+**Current Version: v1.3.2** (January 31, 2026)
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Updates
+- v1.3.2: Improved privacy badge messaging ("Simple & Safe", tool-focused explanation)
 - v1.3.1: User guide, privacy notice, version display
 - v1.3.0: Reset buttons, customizable information sources
 - v1.2.0: Category cards, AI buttons, LocalStorage

@@ -12,6 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Searchable nationality dropdown
 - Additional accessibility improvements
 
+## [1.3.2] - 2026-01-31
+
+### Changed
+- **Privacy badge redesigned** for clearer, more reassuring messaging
+  - Badge text: "Simple & Safe" (previously "Your data stays in your browser")
+  - Tooltip title: "About This Prompt Generator" (focuses on tool functionality)
+  - Removed technical jargon (LocalStorage, server, etc.) that could cause anxiety
+  - New positive messaging: "Create AI prompts easily — no registration required"
+  - Emphasis on convenience rather than data concerns
+
+### Improved
+- User trust through tool-focused explanation instead of privacy-focused warnings
+- International user clarity with simpler English expressions
+
 ## [1.3.1] - 2026-01-31
 
 ### Added
