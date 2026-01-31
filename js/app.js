@@ -615,7 +615,15 @@ function updateCurrentSources() {
     });
 }
 
-function addAdditionalSource(label = '', url = '') {
+function addAdditionalSource(label, url) {
+    // Handle case when called as event handler (label would be PointerEvent)
+    if (label instanceof Event || typeof label !== 'string') {
+        label = '';
+    }
+    if (typeof url !== 'string') {
+        url = '';
+    }
+    
     const sourceId = Date.now();
     const sourceHtml = `
         <div class="additional-source-item" data-source-id="${sourceId}">
@@ -629,7 +637,7 @@ function addAdditionalSource(label = '', url = '') {
             </div>
             <div class="additional-source-row">
                 <input type="url" class="source-url-input" 
-                       placeholder="https://..." 
+                       placeholder="Enter URL (e.g., https://example.com/faq)" 
                        value="${url}">
             </div>
         </div>
