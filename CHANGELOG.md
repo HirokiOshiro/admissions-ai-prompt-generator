@@ -29,9 +29,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New CSS animations for accordion content (slideDown)
 - Privacy content styles with nested list formatting
 
-## [1.3.0] - 2025-01-31
+## [1.3.0] - 2026-01-31
 
 ### Added
+- **Country/Region separation**: Split "Nationality" into "Country/Region of Citizenship" and "Country/Region of Residence"
+- **International sensitivity**: Added Hong Kong (SAR), Macau (SAR), alphabetical sorting
 - **Reset buttons** for Step 1 (Your Info) and Step 2 (Question) sections
 - **Information Sources section** (Step 3) with customizable URLs
 - Ability to edit default source URLs (Handbook, Application Page)
@@ -50,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added source management functions (add, remove, save, load)
 - Enhanced prompt generation to build sources section dynamically
 
-## [1.2.0] - 2025-01-31
+## [1.2.0] - 2026-01-31
 
 ### Added
 - Category cards with icons replacing checkbox list
@@ -72,7 +74,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CSS animations with staggered delays for cards
 - Enhanced semantic HTML structure
 
-## [1.1.0] - 2025-01-31
+## [1.1.0] - 2026-01-31
 
 ### Added
 - Progress bar indicator showing current step (1/2/3)
@@ -88,7 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added progress bar state management in JavaScript
 - Enhanced CSS for progress indicators and floating button
 
-## [1.0.0] - 2025-01-31
+## [1.0.0] - 2026-01-31
 
 ### Added
 - Initial release of the AI Prompt Generator
