@@ -33,6 +33,11 @@
                 <div class="progress-line"></div>
                 <div class="progress-step" data-step="3">
                     <div class="step-circle">3</div>
+                    <span class="step-label">Sources</span>
+                </div>
+                <div class="progress-line"></div>
+                <div class="progress-step" data-step="4">
+                    <div class="step-circle">4</div>
                     <span class="step-label">Result</span>
                 </div>
             </div>
@@ -44,10 +49,15 @@
                 
                 <!-- Step 1: Your Information -->
                 <section class="form-section" aria-labelledby="step1-title">
-                    <h2 class="section-title" id="step1-title">
-                        <span class="step-number">1</span>
-                        Your Information
-                    </h2>
+                    <div class="section-header">
+                        <h2 class="section-title" id="step1-title">
+                            <span class="step-number">1</span>
+                            Your Information
+                        </h2>
+                        <button type="button" class="btn btn-reset" id="resetStep1Btn" aria-label="Clear Step 1 inputs">
+                            <span class="reset-icon">↺</span> Clear
+                        </button>
+                    </div>
                     
                     <div class="form-group">
                         <label for="program">Desired Program</label>
@@ -112,10 +122,15 @@
 
                 <!-- Step 2: Your Question -->
                 <section class="form-section" aria-labelledby="step2-title">
-                    <h2 class="section-title" id="step2-title">
-                        <span class="step-number">2</span>
-                        Your Question
-                    </h2>
+                    <div class="section-header">
+                        <h2 class="section-title" id="step2-title">
+                            <span class="step-number">2</span>
+                            Your Question
+                        </h2>
+                        <button type="button" class="btn btn-reset" id="resetStep2Btn" aria-label="Clear Step 2 inputs">
+                            <span class="reset-icon">↺</span> Clear
+                        </button>
+                    </div>
 
                     <div class="form-group">
                         <label id="category-label">What would you like to know? <span class="label-hint">(Select all that apply)</span></label>
@@ -198,6 +213,63 @@
                         <label for="specificQuestion">Specific Question <span class="label-hint">(Optional but recommended)</span></label>
                         <textarea id="specificQuestion" name="specificQuestion" rows="4"
                                   placeholder="Describe your specific situation or question. For example: 'In my country, high school is 11 years. Am I eligible to apply?'"></textarea>
+                    </div>
+                </section>
+
+                <!-- Step 3: Information Sources -->
+                <section class="form-section" aria-labelledby="step3-title">
+                    <div class="section-header">
+                        <h2 class="section-title" id="step3-title">
+                            <span class="step-number">3</span>
+                            Information Sources
+                        </h2>
+                        <button type="button" class="btn btn-reset" id="resetSourcesBtn" aria-label="Reset to default sources">
+                            <span class="reset-icon">↺</span> Reset to Default
+                        </button>
+                    </div>
+                    
+                    <p class="section-description">
+                        The AI will use these sources to answer your question. You can customize or add additional sources.
+                    </p>
+
+                    <!-- Default Sources -->
+                    <div class="sources-group">
+                        <h3 class="sources-subtitle">Default Sources</h3>
+                        
+                        <div class="source-item" data-source="handbook">
+                            <div class="source-header">
+                                <span class="source-icon">📖</span>
+                                <span class="source-label">Admissions Handbook 2026</span>
+                            </div>
+                            <input type="url" id="sourceHandbook" name="sourceHandbook" 
+                                   class="source-url-input"
+                                   value="https://en.ritsumei.ac.jp/e-ug/apply/aohb26.pdf"
+                                   placeholder="Enter handbook URL">
+                        </div>
+
+                        <div class="source-item" data-source="applicationPage">
+                            <div class="source-header">
+                                <span class="source-icon">🌐</span>
+                                <span class="source-label">Application Procedures</span>
+                            </div>
+                            <input type="url" id="sourceApplicationPage" name="sourceApplicationPage" 
+                                   class="source-url-input"
+                                   value="https://en.ritsumei.ac.jp/e-ug/apply/howto.html/?version=English"
+                                   placeholder="Enter application page URL">
+                        </div>
+                    </div>
+
+                    <!-- Additional Sources -->
+                    <div class="sources-group">
+                        <h3 class="sources-subtitle">Additional Sources <span class="label-hint">(Optional)</span></h3>
+                        
+                        <div id="additionalSourcesContainer">
+                            <!-- Dynamic additional sources will be added here -->
+                        </div>
+
+                        <button type="button" class="btn btn-add-source" id="addSourceBtn">
+                            <span class="add-icon">+</span> Add Source
+                        </button>
                     </div>
                 </section>
 

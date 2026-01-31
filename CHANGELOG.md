@@ -7,10 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned for v1.3.0
+### Planned for v1.4.0
 - Dark mode support
 - Searchable nationality dropdown
 - Additional accessibility improvements
+
+## [1.3.0] - 2025-01-31
+
+### Added
+- **Reset buttons** for Step 1 (Your Info) and Step 2 (Question) sections
+- **Information Sources section** (Step 3) with customizable URLs
+- Ability to edit default source URLs (Handbook, Application Page)
+- Ability to add unlimited additional information sources
+- "Reset to Default" button to restore original source URLs
+- Progress bar expanded to 4 steps (Your Info → Question → Sources → Result)
+- LocalStorage persistence for custom information sources
+
+### Changed
+- Progress indicator now shows 4 steps instead of 3
+- Generated prompt dynamically includes all configured sources
+- Section headers now include reset/clear buttons
+
+### Technical
+- Refactored CONFIG to support dynamic sources
+- Added source management functions (add, remove, save, load)
+- Enhanced prompt generation to build sources section dynamically
 
 ## [1.2.0] - 2025-01-31
 
