@@ -4,7 +4,7 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 
 ## 🌐 Live Demo
 
-Coming soon: `https://[username].github.io/ritsumeikan-admissions-prompt-generator/`
+**https://hirokioshiro.github.io/admissions-ai-prompt-generator/**
 
 ## ✨ Features
 
