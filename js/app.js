@@ -246,8 +246,8 @@ If you cannot access the URLs above or cannot read their content:
 | Item | Details |
 |------|---------|
 | Desired Program | ${data.program} |
-| Nationality | ${data.nationality} |
-| Country of Residence | ${data.countryOfResidence} |
+| Country/Region of Citizenship | ${data.nationality} |
+| Country/Region of Residence | ${data.countryOfResidence} |
 | Educational Status | ${data.educationStatus} |
 | Years of Education | ${data.educationYears} years |
 
