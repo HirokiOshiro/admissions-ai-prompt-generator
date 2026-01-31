@@ -12,6 +12,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Searchable nationality dropdown
 - Additional accessibility improvements
 
+## [1.3.1] - 2026-01-31
+
+### Added
+- **Collapsible User Guide** after header explaining how to use the tool
+- **Privacy & Data notice** (collapsible) explaining LocalStorage usage and data privacy
+- **Version and last updated date** display in footer
+- Step-by-step usage instructions with 4-step workflow explanation
+
+### Changed
+- Footer redesigned with three sections: main info, privacy accordion, and version meta
+- Improved transparency about data handling for user trust
+
+### Technical
+- Added `<details>` accordion components for collapsible sections
+- New CSS animations for accordion content (slideDown)
+- Privacy content styles with nested list formatting
+
 ## [1.3.0] - 2025-01-31
 
 ### Added

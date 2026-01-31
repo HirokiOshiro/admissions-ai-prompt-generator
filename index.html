@@ -18,6 +18,37 @@
             </p>
         </header>
 
+        <!-- User Guide (Collapsible) -->
+        <details class="user-guide-accordion">
+            <summary class="user-guide-toggle">
+                <span class="guide-icon">📘</span>
+                <span class="guide-title">How to Use This Tool</span>
+                <span class="toggle-icon">▼</span>
+            </summary>
+            <div class="user-guide-content">
+                <div class="guide-section">
+                    <h4>What is this tool?</h4>
+                    <p>This tool helps you create an optimized prompt (question) to ask AI assistants like ChatGPT, Claude, or Gemini about Ritsumeikan University's international admissions.</p>
+                </div>
+                <div class="guide-section">
+                    <h4>How does it work?</h4>
+                    <ol>
+                        <li><strong>Step 1:</strong> Enter your basic information (desired program, country/region, education background)</li>
+                        <li><strong>Step 2:</strong> Select what topics you want to know about</li>
+                        <li><strong>Step 3:</strong> Review or customize the information sources (optional)</li>
+                        <li><strong>Step 4:</strong> Copy the generated prompt and paste it into your preferred AI tool</li>
+                    </ol>
+                </div>
+                <div class="guide-section">
+                    <h4>Why use this tool?</h4>
+                    <p>The generated prompt instructs the AI to answer based on <strong>official university documents only</strong>, reducing the risk of incorrect information.</p>
+                </div>
+                <div class="guide-section guide-note">
+                    <p><strong>💡 Tip:</strong> Your inputs are automatically saved in your browser, so you can return later without re-entering your information.</p>
+                </div>
+            </div>
+        </details>
+
         <!-- Progress Bar -->
         <div class="progress-container">
             <div class="progress-bar">
@@ -373,8 +404,31 @@
 
         <!-- Footer -->
         <footer class="footer">
-            <p>This tool generates prompts for AI assistants. It does not make eligibility decisions.</p>
-            <p>Official information: <a href="https://en.ritsumei.ac.jp/e-ug/" target="_blank" rel="noopener">Ritsumeikan University International Admissions</a></p>
+            <div class="footer-main">
+                <p>This tool generates prompts for AI assistants. It does not make eligibility decisions.</p>
+                <p>Official information: <a href="https://en.ritsumei.ac.jp/e-ug/" target="_blank" rel="noopener">Ritsumeikan University International Admissions</a></p>
+            </div>
+            
+            <div class="footer-privacy">
+                <details class="privacy-accordion">
+                    <summary>🔒 Privacy & Data</summary>
+                    <div class="privacy-content">
+                        <p><strong>Your data stays in your browser.</strong></p>
+                        <ul>
+                            <li>All form inputs are stored locally using your browser's LocalStorage</li>
+                            <li>No data is sent to any server or third party</li>
+                            <li>You can clear your saved data anytime using the "Clear" buttons</li>
+                            <li>Closing your browser in private/incognito mode will erase all data</li>
+                        </ul>
+                    </div>
+                </details>
+            </div>
+            
+            <div class="footer-meta">
+                <span class="version">Version 1.3.1</span>
+                <span class="separator">|</span>
+                <span class="last-updated">Last updated: January 31, 2026</span>
+            </div>
         </footer>
     </div>
 

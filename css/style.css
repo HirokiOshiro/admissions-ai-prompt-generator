@@ -826,6 +826,125 @@ textarea {
 }
 
 /* ========================================
+   User Guide (Collapsible)
+======================================== */
+.user-guide-accordion {
+    background-color: #f0f7ff;
+    border: 1px solid #d0e3f7;
+    border-radius: var(--border-radius);
+    margin-bottom: var(--spacing-lg);
+    overflow: hidden;
+}
+
+.user-guide-toggle {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-md) var(--spacing-lg);
+    cursor: pointer;
+    background-color: #e3f0fc;
+    font-weight: 500;
+    color: var(--text-dark);
+    list-style: none;
+    transition: background-color 0.2s ease;
+}
+
+.user-guide-toggle::-webkit-details-marker {
+    display: none;
+}
+
+.user-guide-toggle:hover {
+    background-color: #d6e8fa;
+}
+
+.guide-icon {
+    font-size: 1.25rem;
+}
+
+.guide-title {
+    flex: 1;
+    font-size: 0.95rem;
+}
+
+.toggle-icon {
+    font-size: 0.75rem;
+    transition: transform 0.3s ease;
+    color: var(--text-light);
+}
+
+.user-guide-accordion[open] .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.user-guide-content {
+    padding: var(--spacing-lg);
+    background-color: #f8fbff;
+    border-top: 1px solid #d0e3f7;
+    animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guide-section {
+    margin-bottom: var(--spacing-md);
+}
+
+.guide-section:last-child {
+    margin-bottom: 0;
+}
+
+.guide-section h4 {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+}
+
+.guide-section p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-medium);
+    margin: 0;
+}
+
+.guide-section ol {
+    font-size: 0.85rem;
+    line-height: 1.8;
+    color: var(--text-medium);
+    margin: 0;
+    padding-left: var(--spacing-lg);
+}
+
+.guide-section ol li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.guide-section ol li:last-child {
+    margin-bottom: 0;
+}
+
+.guide-note {
+    background-color: #fff9e6;
+    border: 1px solid #f0e0a0;
+    border-radius: var(--border-radius-sm);
+    padding: var(--spacing-md) !important;
+    margin-top: var(--spacing-md);
+}
+
+.guide-note p {
+    color: #7a6520;
+}
+
+/* ========================================
    Footer
 ======================================== */
 .footer {
@@ -835,6 +954,14 @@ textarea {
     font-size: 0.85rem;
 }
 
+.footer-main {
+    margin-bottom: var(--spacing-md);
+}
+
+.footer-main p {
+    margin: var(--spacing-xs) 0;
+}
+
 .footer a {
     color: var(--primary-color);
     text-decoration: none;
@@ -842,6 +969,85 @@ textarea {
 
 .footer a:hover {
     text-decoration: underline;
+}
+
+/* Privacy Accordion in Footer */
+.footer-privacy {
+    margin: var(--spacing-md) auto;
+    max-width: 500px;
+}
+
+.privacy-accordion {
+    background-color: var(--background-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: 0.8rem;
+}
+
+.privacy-accordion summary {
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    color: var(--text-medium);
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-xs);
+}
+
+.privacy-accordion summary::-webkit-details-marker {
+    display: none;
+}
+
+.privacy-accordion summary:hover {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+}
+
+.privacy-content {
+    padding: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    text-align: left;
+    background-color: white;
+}
+
+.privacy-content p {
+    margin: 0 0 var(--spacing-sm) 0;
+    color: var(--text-medium);
+}
+
+.privacy-content ul {
+    margin: 0;
+    padding-left: var(--spacing-lg);
+    color: var(--text-light);
+    font-size: 0.78rem;
+    line-height: 1.7;
+}
+
+.privacy-content ul li {
+    margin-bottom: var(--spacing-xs);
+}
+
+/* Footer Meta (Version & Date) */
+.footer-meta {
+    margin-top: var(--spacing-md);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid var(--border-color);
+    font-size: 0.75rem;
+    color: var(--text-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.footer-meta .separator {
+    color: var(--border-color);
+}
+
+.version,
+.last-updated {
+    opacity: 0.8;
 }
 
 /* ========================================
