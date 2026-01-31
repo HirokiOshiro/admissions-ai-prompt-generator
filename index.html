@@ -63,20 +63,20 @@
                         <label for="program">Desired Program</label>
                         <select id="program" name="program" required aria-required="true">
                             <option value="">-- Select a program --</option>
-                            <option value="GLA">GLA (Global Liberal Arts)</option>
-                            <option value="JDP">JDP (Joint Degree Program)</option>
-                            <option value="GS">GS (Global Studies)</option>
-                            <option value="CRPS">CRPS (Community and Regional Policy Studies)</option>
-                            <option value="ISSE">ISSE (Information Science and Engineering)</option>
-                            <option value="Other">Other English-basis program</option>
+                            <option value="GLA">GLA (College of Global Liberal Arts)</option>
+                            <option value="JDP">JDP (American University - Ritsumeikan University Joint Degree Program)</option>
+                            <option value="GS">GS (Global Studies Major)</option>
+                            <option value="CRPS">CRPS (Community and Regional Policy Studies Major)</option>
+                            <option value="ISSE">ISSE (Information Systems Science and Engineering Course)</option>
+                            <option value="Other">Other program</option>
                             <option value="Undecided">Undecided / Exploring options</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="nationality">Nationality / Country of Residence</label>
+                        <label for="nationality">Nationality</label>
                         <select id="nationality" name="nationality" required>
-                            <option value="">-- Select your country --</option>
+                            <option value="">-- Select your nationality --</option>
                             <option value="China">China</option>
                             <option value="South Korea">South Korea</option>
                             <option value="Vietnam">Vietnam</option>
@@ -94,7 +94,32 @@
                             <option value="Other">Other (specify below)</option>
                         </select>
                         <input type="text" id="nationalityOther" name="nationalityOther" 
-                               placeholder="Enter your country" class="hidden">
+                               placeholder="Enter your nationality" class="hidden">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="countryOfResidence">Country of Residence</label>
+                        <select id="countryOfResidence" name="countryOfResidence" required>
+                            <option value="">-- Select your country of residence --</option>
+                            <option value="China">China</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="India">India</option>
+                            <option value="Taiwan">Taiwan</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Nepal">Nepal</option>
+                            <option value="USA">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="Japan">Japan</option>
+                            <option value="Other">Other (specify below)</option>
+                        </select>
+                        <input type="text" id="countryOfResidenceOther" name="countryOfResidenceOther" 
+                               placeholder="Enter your country of residence" class="hidden">
                     </div>
 
                     <div class="form-group">
@@ -173,7 +198,7 @@
                             <label class="category-card">
                                 <input type="checkbox" name="category" value="Selection process">
                                 <div class="card-content">
-                                    <span class="card-icon">🔍</span>
+                                    <span class="card-icon">➡️</span>
                                     <span class="card-label">Selection Process</span>
                                 </div>
                             </label>

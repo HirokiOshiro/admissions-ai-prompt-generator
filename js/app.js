@@ -39,6 +39,8 @@ const editBtn = document.getElementById('editBtn');
 const toast = document.getElementById('toast');
 const nationalitySelect = document.getElementById('nationality');
 const nationalityOther = document.getElementById('nationalityOther');
+const countryOfResidenceSelect = document.getElementById('countryOfResidence');
+const countryOfResidenceOther = document.getElementById('countryOfResidenceOther');
 const categoryError = document.getElementById('categoryError');
 
 // Progress bar elements
@@ -69,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Nationality "Other" toggle
     nationalitySelect.addEventListener('change', handleNationalityChange);
+
+    // Country of Residence "Other" toggle
+    countryOfResidenceSelect.addEventListener('change', handleCountryOfResidenceChange);
 
     // Track form section focus for progress bar
     trackFormProgress();
@@ -158,6 +163,17 @@ function handleNationalityChange() {
     }
 }
 
+function handleCountryOfResidenceChange() {
+    if (countryOfResidenceSelect.value === 'Other') {
+        countryOfResidenceOther.classList.remove('hidden');
+        countryOfResidenceOther.required = true;
+    } else {
+        countryOfResidenceOther.classList.add('hidden');
+        countryOfResidenceOther.required = false;
+        countryOfResidenceOther.value = '';
+    }
+}
+
 // ========================================
 // Data Collection
 // ========================================
@@ -166,9 +182,14 @@ function collectFormData() {
         ? nationalityOther.value 
         : nationalitySelect.value;
 
+    const countryOfResidence = countryOfResidenceSelect.value === 'Other' 
+        ? countryOfResidenceOther.value 
+        : countryOfResidenceSelect.value;
+
     return {
         program: document.getElementById('program').value,
         nationality: nationality,
+        countryOfResidence: countryOfResidence,
         educationStatus: document.getElementById('educationStatus').value,
         educationYears: document.getElementById('educationYears').value,
         categories: getSelectedCategories(),
@@ -225,7 +246,8 @@ If you cannot access the URLs above or cannot read their content:
 | Item | Details |
 |------|---------|
 | Desired Program | ${data.program} |
-| Nationality/Country | ${data.nationality} |
+| Nationality | ${data.nationality} |
+| Country of Residence | ${data.countryOfResidence} |
 | Educational Status | ${data.educationStatus} |
 | Years of Education | ${data.educationYears} years |
 
@@ -341,7 +363,7 @@ function updateProgress(step) {
 
 function trackFormProgress() {
     // Step 1 fields
-    const step1Fields = ['program', 'nationality', 'educationStatus', 'educationYears'];
+    const step1Fields = ['program', 'nationality', 'countryOfResidence', 'educationStatus', 'educationYears'];
     // Step 2 fields
     const step2Container = document.querySelector('.form-section:nth-of-type(2)');
     // Step 3 fields (Sources)
@@ -385,6 +407,8 @@ function saveFormData() {
             program: document.getElementById('program').value,
             nationality: nationalitySelect.value,
             nationalityOther: nationalityOther.value,
+            countryOfResidence: countryOfResidenceSelect.value,
+            countryOfResidenceOther: countryOfResidenceOther.value,
             educationStatus: document.getElementById('educationStatus').value,
             educationYears: document.getElementById('educationYears').value,
             categories: getSelectedCategories(),
@@ -415,6 +439,16 @@ function loadSavedData() {
                 nationalityOther.required = true;
                 if (data.nationalityOther) {
                     nationalityOther.value = data.nationalityOther;
+                }
+            }
+        }
+        if (data.countryOfResidence) {
+            countryOfResidenceSelect.value = data.countryOfResidence;
+            if (data.countryOfResidence === 'Other') {
+                countryOfResidenceOther.classList.remove('hidden');
+                countryOfResidenceOther.required = true;
+                if (data.countryOfResidenceOther) {
+                    countryOfResidenceOther.value = data.countryOfResidenceOther;
                 }
             }
         }
@@ -479,6 +513,10 @@ function resetStep1() {
     nationalityOther.value = '';
     nationalityOther.classList.add('hidden');
     nationalityOther.required = false;
+    countryOfResidenceSelect.value = '';
+    countryOfResidenceOther.value = '';
+    countryOfResidenceOther.classList.add('hidden');
+    countryOfResidenceOther.required = false;
     document.getElementById('educationStatus').value = '';
     document.getElementById('educationYears').value = '';
 
@@ -490,6 +528,8 @@ function resetStep1() {
             data.program = '';
             data.nationality = '';
             data.nationalityOther = '';
+            data.countryOfResidence = '';
+            data.countryOfResidenceOther = '';
             data.educationStatus = '';
             data.educationYears = '';
             localStorage.setItem(CONFIG.storageKey, JSON.stringify(data));
