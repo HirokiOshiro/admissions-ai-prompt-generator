@@ -16,7 +16,8 @@ const CONFIG = {
             url: 'https://en.ritsumei.ac.jp/e-ug/apply/howto.html/?version=English',
             label: 'Application Procedures'
         }
-    }
+    },
+    storageKey: 'ritsumei_prompt_generator_data'
 };
 
 // ========================================
@@ -40,6 +41,9 @@ const progressLines = document.querySelectorAll('.progress-line');
 // Event Listeners
 // ========================================
 document.addEventListener('DOMContentLoaded', () => {
+    // Load saved data
+    loadSavedData();
+
     // Form submission
     form.addEventListener('submit', handleFormSubmit);
 
@@ -54,6 +58,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Track form section focus for progress bar
     trackFormProgress();
+
+    // Auto-save on input changes
+    setupAutoSave();
 });
 
 // ========================================
@@ -307,5 +314,98 @@ function trackFormProgress() {
     const specificQuestion = document.getElementById('specificQuestion');
     if (specificQuestion) {
         specificQuestion.addEventListener('focus', () => updateProgress(2));
+    }
+}
+
+// ========================================
+// LocalStorage Functions
+// ========================================
+function saveFormData() {
+    try {
+        const data = {
+            program: document.getElementById('program').value,
+            nationality: nationalitySelect.value,
+            nationalityOther: nationalityOther.value,
+            educationStatus: document.getElementById('educationStatus').value,
+            educationYears: document.getElementById('educationYears').value,
+            categories: getSelectedCategories(),
+            specificQuestion: document.getElementById('specificQuestion').value,
+            savedAt: new Date().toISOString()
+        };
+        localStorage.setItem(CONFIG.storageKey, JSON.stringify(data));
+    } catch (e) {
+        console.warn('Could not save to localStorage:', e);
+    }
+}
+
+function loadSavedData() {
+    try {
+        const savedData = localStorage.getItem(CONFIG.storageKey);
+        if (!savedData) return;
+
+        const data = JSON.parse(savedData);
+        
+        // Restore form fields
+        if (data.program) {
+            document.getElementById('program').value = data.program;
+        }
+        if (data.nationality) {
+            nationalitySelect.value = data.nationality;
+            if (data.nationality === 'Other') {
+                nationalityOther.classList.remove('hidden');
+                nationalityOther.required = true;
+                if (data.nationalityOther) {
+                    nationalityOther.value = data.nationalityOther;
+                }
+            }
+        }
+        if (data.educationStatus) {
+            document.getElementById('educationStatus').value = data.educationStatus;
+        }
+        if (data.educationYears) {
+            document.getElementById('educationYears').value = data.educationYears;
+        }
+        if (data.categories && data.categories.length > 0) {
+            data.categories.forEach(category => {
+                const checkbox = document.querySelector(`input[name="category"][value="${category}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        }
+        if (data.specificQuestion) {
+            document.getElementById('specificQuestion').value = data.specificQuestion;
+        }
+
+        // Show subtle notification that data was restored
+        if (data.savedAt) {
+            console.log('Form data restored from:', new Date(data.savedAt).toLocaleString());
+        }
+    } catch (e) {
+        console.warn('Could not load from localStorage:', e);
+    }
+}
+
+function setupAutoSave() {
+    // Debounce function to avoid too frequent saves
+    let saveTimeout;
+    const debouncedSave = () => {
+        clearTimeout(saveTimeout);
+        saveTimeout = setTimeout(saveFormData, 500);
+    };
+
+    // Add listeners to all form inputs
+    const inputs = form.querySelectorAll('input, select, textarea');
+    inputs.forEach(input => {
+        input.addEventListener('change', debouncedSave);
+        input.addEventListener('input', debouncedSave);
+    });
+}
+
+function clearSavedData() {
+    try {
+        localStorage.removeItem(CONFIG.storageKey);
+    } catch (e) {
+        console.warn('Could not clear localStorage:', e);
     }
 }

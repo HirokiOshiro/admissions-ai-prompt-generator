@@ -278,7 +278,7 @@ textarea {
 }
 
 /* ========================================
-   Checkbox Group
+   Checkbox Group (Legacy - keeping for backwards compatibility)
 ======================================== */
 .checkbox-group {
     display: flex;
@@ -309,6 +309,79 @@ textarea {
 
 .checkbox-label span {
     font-size: 0.95rem;
+}
+
+/* ========================================
+   Category Card Grid
+======================================== */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.category-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.category-card input[type="checkbox"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.category-card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--background-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    min-height: 90px;
+}
+
+.category-card:hover .card-content {
+    border-color: var(--primary-color);
+    background: #fff5f5;
+}
+
+.category-card input:checked + .card-content {
+    border-color: var(--primary-color);
+    background: #fff5f5;
+    box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.2);
+}
+
+.category-card input:focus + .card-content {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.card-icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--spacing-xs);
+}
+
+.card-label {
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-align: center;
+    color: var(--text-color);
+}
+
+/* Selected indicator */
+.category-card input:checked + .card-content::after {
+    content: "✓";
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: bold;
 }
 
 /* ========================================
@@ -450,6 +523,7 @@ textarea {
 
 .usage-guide ol {
     margin-left: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
 }
 
 .usage-guide li {
@@ -468,6 +542,69 @@ textarea {
 
 .usage-guide a:hover {
     text-decoration: underline;
+}
+
+/* AI Service Buttons */
+.ai-service-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding-top: var(--spacing-md);
+    border-top: 1px solid #bee3f8;
+}
+
+.ai-buttons-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #2b6cb0;
+    margin-right: var(--spacing-xs);
+}
+
+.btn-ai {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: var(--border-radius);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.btn-ai .ai-icon {
+    font-size: 1rem;
+}
+
+.btn-chatgpt {
+    background-color: #10a37f;
+    color: white;
+}
+
+.btn-chatgpt:hover {
+    background-color: #0d8a6a;
+    transform: translateY(-1px);
+}
+
+.btn-claude {
+    background-color: #d97706;
+    color: white;
+}
+
+.btn-claude:hover {
+    background-color: #b45309;
+    transform: translateY(-1px);
+}
+
+.btn-gemini {
+    background-color: #4285f4;
+    color: white;
+}
+
+.btn-gemini:hover {
+    background-color: #3367d6;
+    transform: translateY(-1px);
 }
 
 /* ========================================
@@ -565,6 +702,58 @@ textarea {
 }
 
 /* ========================================
+   Animations
+======================================== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.form-section {
+    animation: fadeIn 0.4s ease-out;
+}
+
+.form-section:nth-child(1) { animation-delay: 0s; }
+.form-section:nth-child(2) { animation-delay: 0.1s; }
+
+.category-card {
+    animation: fadeIn 0.3s ease-out;
+    animation-fill-mode: both;
+}
+
+.category-card:nth-child(1) { animation-delay: 0.05s; }
+.category-card:nth-child(2) { animation-delay: 0.1s; }
+.category-card:nth-child(3) { animation-delay: 0.15s; }
+.category-card:nth-child(4) { animation-delay: 0.2s; }
+.category-card:nth-child(5) { animation-delay: 0.25s; }
+.category-card:nth-child(6) { animation-delay: 0.3s; }
+.category-card:nth-child(7) { animation-delay: 0.35s; }
+.category-card:nth-child(8) { animation-delay: 0.4s; }
+.category-card:nth-child(9) { animation-delay: 0.45s; }
+.category-card:nth-child(10) { animation-delay: 0.5s; }
+
+#step3 {
+    animation: slideUp 0.5s ease-out;
+}
+
+/* ========================================
    Responsive Design
 ======================================== */
 @media (max-width: 600px) {
@@ -626,5 +815,39 @@ textarea {
     .btn-copy-floating {
         padding: 0.4rem 0.75rem;
         font-size: 0.75rem;
+    }
+
+    /* Category grid responsive */
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .category-card .card-content {
+        padding: var(--spacing-sm);
+    }
+
+    .card-icon {
+        font-size: 1.2rem;
+    }
+
+    .card-label {
+        font-size: 0.7rem;
+    }
+
+    /* AI service buttons responsive */
+    .ai-service-buttons {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .ai-buttons-label {
+        text-align: center;
+        margin-bottom: var(--spacing-xs);
+    }
+
+    .btn-ai {
+        justify-content: center;
+        width: 100%;
     }
 }

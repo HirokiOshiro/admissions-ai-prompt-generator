@@ -43,15 +43,15 @@
             <form id="promptForm" class="form">
                 
                 <!-- Step 1: Your Information -->
-                <section class="form-section">
-                    <h2 class="section-title">
+                <section class="form-section" aria-labelledby="step1-title">
+                    <h2 class="section-title" id="step1-title">
                         <span class="step-number">1</span>
                         Your Information
                     </h2>
                     
                     <div class="form-group">
                         <label for="program">Desired Program</label>
-                        <select id="program" name="program" required>
+                        <select id="program" name="program" required aria-required="true">
                             <option value="">-- Select a program --</option>
                             <option value="ISSE">ISSE (Information Science and Engineering)</option>
                             <option value="GLA">GLA (Global Liberal Arts)</option>
@@ -111,57 +111,87 @@
                 </section>
 
                 <!-- Step 2: Your Question -->
-                <section class="form-section">
-                    <h2 class="section-title">
+                <section class="form-section" aria-labelledby="step2-title">
+                    <h2 class="section-title" id="step2-title">
                         <span class="step-number">2</span>
                         Your Question
                     </h2>
 
                     <div class="form-group">
-                        <label>What would you like to know? <span class="label-hint">(Select all that apply)</span></label>
-                        <div class="checkbox-group">
-                            <label class="checkbox-label">
+                        <label id="category-label">What would you like to know? <span class="label-hint">(Select all that apply)</span></label>
+                        <div class="category-grid" role="group" aria-labelledby="category-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Program overview">
-                                <span>Program overview</span>
+                                <div class="card-content">
+                                    <span class="card-icon">🎓</span>
+                                    <span class="card-label">Program Overview</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Eligibility requirements">
-                                <span>Eligibility requirements</span>
+                                <div class="card-content">
+                                    <span class="card-icon">✅</span>
+                                    <span class="card-label">Eligibility</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Required documents">
-                                <span>Required documents</span>
+                                <div class="card-content">
+                                    <span class="card-icon">📄</span>
+                                    <span class="card-label">Documents</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="English proficiency requirements">
-                                <span>English proficiency requirements</span>
+                                <div class="card-content">
+                                    <span class="card-icon">🗣️</span>
+                                    <span class="card-label">English Proficiency</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Application procedures and deadlines">
-                                <span>Application procedures and deadlines</span>
+                                <div class="card-content">
+                                    <span class="card-icon">📅</span>
+                                    <span class="card-label">Deadlines</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Selection process">
-                                <span>Selection process (screening, interview)</span>
+                                <div class="card-content">
+                                    <span class="card-icon">🔍</span>
+                                    <span class="card-label">Selection Process</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Tuition and fees">
-                                <span>Tuition and fees</span>
+                                <div class="card-content">
+                                    <span class="card-icon">💰</span>
+                                    <span class="card-label">Tuition & Fees</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Scholarships">
-                                <span>Scholarships</span>
+                                <div class="card-content">
+                                    <span class="card-icon">🏆</span>
+                                    <span class="card-label">Scholarships</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Visa">
-                                <span>Visa</span>
+                                <div class="card-content">
+                                    <span class="card-icon">🛂</span>
+                                    <span class="card-label">Visa</span>
+                                </div>
                             </label>
-                            <label class="checkbox-label">
+                            <label class="category-card">
                                 <input type="checkbox" name="category" value="Other">
-                                <span>Other</span>
+                                <div class="card-content">
+                                    <span class="card-icon">❓</span>
+                                    <span class="card-label">Other</span>
+                                </div>
                             </label>
                         </div>
-                        <p class="error-message hidden" id="categoryError">Please select at least one category.</p>
+                        <p class="error-message hidden" id="categoryError" role="alert">Please select at least one category.</p>
                     </div>
 
                     <div class="form-group">
@@ -205,17 +235,23 @@
                 <div class="usage-guide">
                     <h3>How to Use This Prompt</h3>
                     <ol>
-                        <li>Click <strong>"Copy to Clipboard"</strong> above</li>
-                        <li>Open your preferred AI tool:
-                            <ul>
-                                <li><a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a></li>
-                                <li><a href="https://claude.ai" target="_blank" rel="noopener">Claude</a></li>
-                                <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a></li>
-                            </ul>
-                        </li>
-                        <li>Paste the prompt and send</li>
+                        <li>Click <strong>"Copy"</strong> button above</li>
+                        <li>Open your preferred AI tool and paste the prompt</li>
                         <li>Review the AI's response</li>
                     </ol>
+                    
+                    <div class="ai-service-buttons">
+                        <span class="ai-buttons-label">Open in:</span>
+                        <a href="https://chat.openai.com" target="_blank" rel="noopener" class="btn btn-ai btn-chatgpt">
+                            <span class="ai-icon">🤖</span> ChatGPT
+                        </a>
+                        <a href="https://claude.ai" target="_blank" rel="noopener" class="btn btn-ai btn-claude">
+                            <span class="ai-icon">🧠</span> Claude
+                        </a>
+                        <a href="https://gemini.google.com" target="_blank" rel="noopener" class="btn btn-ai btn-gemini">
+                            <span class="ai-icon">✨</span> Gemini
+                        </a>
+                    </div>
                 </div>
 
                 <!-- Disclaimer -->

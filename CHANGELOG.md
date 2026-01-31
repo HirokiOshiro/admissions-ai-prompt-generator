@@ -7,12 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned for v1.2.0
-- Category cards with icons
-- AI service link buttons
-- LocalStorage for form data persistence
+### Planned for v1.3.0
+- Dark mode support
+- Searchable nationality dropdown
+- Additional accessibility improvements
 
-## [1.1.0] - 2026-01-31
+## [1.2.0] - 2025-01-31
+
+### Added
+- Category cards with icons replacing checkbox list
+- Visual card selection with hover and checked states
+- AI service quick-launch buttons (ChatGPT, Claude, Gemini)
+- Fade-in animations for form sections and cards
+- LocalStorage auto-save for form data persistence
+- Form data restoration on page reload
+- ARIA attributes for improved accessibility
+
+### Changed
+- Categories now display as a responsive grid of cards
+- Each category has a unique emoji icon for visual identification
+- AI service links transformed into branded buttons
+- Improved responsive design for mobile devices
+
+### Technical
+- Added debounced auto-save functionality
+- CSS animations with staggered delays for cards
+- Enhanced semantic HTML structure
+
+## [1.1.0] - 2025-01-31
 
 ### Added
 - Progress bar indicator showing current step (1/2/3)
@@ -28,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added progress bar state management in JavaScript
 - Enhanced CSS for progress indicators and floating button
 
-## [1.0.0] - 2026-01-31
+## [1.0.0] - 2025-01-31
 
 ### Added
 - Initial release of the AI Prompt Generator
