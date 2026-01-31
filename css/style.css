@@ -57,6 +57,109 @@ body {
     color: white;
     border-radius: var(--border-radius);
     margin-bottom: var(--spacing-md);
+    position: relative;
+}
+
+/* Privacy Badge in Header */
+.privacy-badge-wrapper {
+    position: absolute;
+    top: var(--spacing-sm);
+    right: var(--spacing-sm);
+}
+
+.privacy-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    background-color: rgba(255, 255, 255, 0.15);
+    padding: 0.35rem 0.65rem;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.privacy-badge:hover,
+.privacy-badge:focus {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
+    outline: none;
+}
+
+.privacy-badge .privacy-icon {
+    font-size: 0.85rem;
+}
+
+.privacy-badge .privacy-label {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* Privacy Tooltip */
+.privacy-tooltip {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 280px;
+    background-color: white;
+    color: var(--text-color);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    font-size: 0.8rem;
+    text-align: left;
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-5px);
+    transition: opacity 0.2s ease, visibility 0.2s ease, transform 0.2s ease;
+}
+
+.privacy-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    right: 20px;
+    width: 12px;
+    height: 12px;
+    background-color: white;
+    transform: rotate(45deg);
+    box-shadow: -2px -2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.privacy-badge-wrapper:hover .privacy-tooltip,
+.privacy-badge-wrapper:focus-within .privacy-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.privacy-tooltip .tooltip-header {
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-bottom: var(--spacing-sm);
+    color: var(--primary-color);
+}
+
+.privacy-tooltip p {
+    margin: 0 0 var(--spacing-sm) 0;
+    line-height: 1.5;
+}
+
+.privacy-tooltip ul {
+    margin: 0;
+    padding-left: var(--spacing-md);
+    line-height: 1.6;
+}
+
+.privacy-tooltip ul li {
+    margin-bottom: 0.25rem;
+    color: var(--text-light);
+}
+
+.privacy-tooltip ul li:last-child {
+    margin-bottom: 0;
 }
 
 .header h1 {
@@ -1148,6 +1251,7 @@ textarea {
 
     .header {
         padding: var(--spacing-lg) var(--spacing-md);
+        padding-top: calc(var(--spacing-lg) + 30px);
     }
 
     .header h1 {
@@ -1156,6 +1260,37 @@ textarea {
 
     .header .subtitle {
         font-size: 1.1rem;
+    }
+
+    /* Privacy badge responsive */
+    .privacy-badge-wrapper {
+        position: absolute;
+        top: var(--spacing-xs);
+        right: var(--spacing-xs);
+        left: var(--spacing-xs);
+        display: flex;
+        justify-content: center;
+    }
+
+    .privacy-badge {
+        font-size: 0.68rem;
+        padding: 0.3rem 0.55rem;
+    }
+
+    .privacy-tooltip {
+        width: calc(100vw - 2rem);
+        max-width: 300px;
+        right: 50%;
+        transform: translateX(50%) translateY(-5px);
+    }
+
+    .privacy-badge-wrapper:hover .privacy-tooltip,
+    .privacy-badge-wrapper:focus-within .privacy-tooltip {
+        transform: translateX(50%) translateY(0);
+    }
+
+    .privacy-tooltip::before {
+        right: calc(50% - 6px);
     }
 
     .form-section {
