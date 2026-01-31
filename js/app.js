@@ -10,7 +10,7 @@ const CONFIG = {
     defaultSources: {
         handbook: {
             url: 'https://en.ritsumei.ac.jp/e-ug/apply/aohb26.pdf',
-            label: 'Admissions Handbook 2026'
+            label: 'Admissions Handbook'
         },
         applicationPage: {
             url: 'https://en.ritsumei.ac.jp/e-ug/apply/howto.html/?version=English',
