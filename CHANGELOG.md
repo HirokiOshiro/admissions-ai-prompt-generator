@@ -7,10 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned for v1.1.0
-- Progress bar indicator
+### Planned for v1.2.0
 - Category cards with icons
-- Improved copy button positioning
+- AI service link buttons
+- LocalStorage for form data persistence
+
+## [1.1.0] - 2026-01-31
+
+### Added
+- Progress bar indicator showing current step (1/2/3)
+- Progress tracking based on form focus
+- Floating copy button positioned at top-right of prompt output
+- Enhanced copy feedback with button color change and checkmark
+
+### Changed
+- Improved focus styles for better accessibility
+- Copy button now shows "✓ Copied!" state with visual feedback
+
+### Technical
+- Added progress bar state management in JavaScript
+- Enhanced CSS for progress indicators and floating button
 
 ## [1.0.0] - 2026-01-31
 
