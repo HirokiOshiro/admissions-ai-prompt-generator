@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ritsumeikan Admissions AI Prompt Generator</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1>Ritsumeikan Admissions</h1>
+            <p class="subtitle">AI Prompt Generator</p>
+            <p class="description">
+                Generate an optimized prompt to ask AI about your admissions questions.
+                The AI will answer based on official information sources.
+            </p>
+        </header>
+
+        <!-- Main Form -->
+        <main class="main">
+            <form id="promptForm" class="form">
+                
+                <!-- Step 1: Your Information -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="step-number">1</span>
+                        Your Information
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="program">Desired Program</label>
+                        <select id="program" name="program" required>
+                            <option value="">-- Select a program --</option>
+                            <option value="ISSE">ISSE (Information Science and Engineering)</option>
+                            <option value="GLA">GLA (Global Liberal Arts)</option>
+                            <option value="IR/PS">IR/PS (International Relations / Policy Science)</option>
+                            <option value="CRPS">CRPS (Community and Regional Policy Studies)</option>
+                            <option value="GS">GS (Global Studies)</option>
+                            <option value="Other">Other English-basis program</option>
+                            <option value="Undecided">Undecided / Exploring options</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="nationality">Nationality / Country of Residence</label>
+                        <select id="nationality" name="nationality" required>
+                            <option value="">-- Select your country --</option>
+                            <option value="China">China</option>
+                            <option value="South Korea">South Korea</option>
+                            <option value="Vietnam">Vietnam</option>
+                            <option value="Indonesia">Indonesia</option>
+                            <option value="India">India</option>
+                            <option value="Taiwan">Taiwan</option>
+                            <option value="Thailand">Thailand</option>
+                            <option value="Malaysia">Malaysia</option>
+                            <option value="Philippines">Philippines</option>
+                            <option value="Myanmar">Myanmar</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Nepal">Nepal</option>
+                            <option value="USA">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="Other">Other (specify below)</option>
+                        </select>
+                        <input type="text" id="nationalityOther" name="nationalityOther" 
+                               placeholder="Enter your country" class="hidden">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educationStatus">Current Educational Status</label>
+                        <select id="educationStatus" name="educationStatus" required>
+                            <option value="">-- Select your status --</option>
+                            <option value="High school student (expected to graduate)">High school student (expected to graduate)</option>
+                            <option value="High school graduate">High school graduate</option>
+                            <option value="University/College student">University/College student</option>
+                            <option value="University/College graduate">University/College graduate</option>
+                            <option value="Graduate school student/graduate">Graduate school student/graduate</option>
+                            <option value="Other (e.g., withdrawn, transferred)">Other (e.g., withdrawn, transferred)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="educationYears">Total Years of Education</label>
+                        <div class="input-with-hint">
+                            <input type="number" id="educationYears" name="educationYears" 
+                                   min="8" max="25" placeholder="e.g., 12" required>
+                            <span class="hint">From elementary school to current/final education</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Step 2: Your Question -->
+                <section class="form-section">
+                    <h2 class="section-title">
+                        <span class="step-number">2</span>
+                        Your Question
+                    </h2>
+
+                    <div class="form-group">
+                        <label>What would you like to know? <span class="label-hint">(Select all that apply)</span></label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Program overview">
+                                <span>Program overview</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Eligibility requirements">
+                                <span>Eligibility requirements</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Required documents">
+                                <span>Required documents</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="English proficiency requirements">
+                                <span>English proficiency requirements</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Application procedures and deadlines">
+                                <span>Application procedures and deadlines</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Selection process">
+                                <span>Selection process (screening, interview)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Tuition and fees">
+                                <span>Tuition and fees</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Scholarships">
+                                <span>Scholarships</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Visa">
+                                <span>Visa</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="category" value="Other">
+                                <span>Other</span>
+                            </label>
+                        </div>
+                        <p class="error-message hidden" id="categoryError">Please select at least one category.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="specificQuestion">Specific Question <span class="label-hint">(Optional but recommended)</span></label>
+                        <textarea id="specificQuestion" name="specificQuestion" rows="4"
+                                  placeholder="Describe your specific situation or question. For example: 'In my country, high school is 11 years. Am I eligible to apply?'"></textarea>
+                    </div>
+                </section>
+
+                <!-- Generate Button -->
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Generate Prompt
+                    </button>
+                </div>
+            </form>
+
+            <!-- Generated Prompt Section -->
+            <section id="promptOutput" class="prompt-output hidden">
+                <h2 class="section-title">
+                    <span class="step-number">3</span>
+                    Your Generated Prompt
+                </h2>
+                
+                <div class="prompt-container">
+                    <div class="prompt-text" id="generatedPrompt"></div>
+                    <div class="prompt-actions">
+                        <button type="button" class="btn btn-copy" id="copyBtn">
+                            <span class="copy-icon">📋</span> Copy to Clipboard
+                        </button>
+                        <button type="button" class="btn btn-secondary" id="editBtn">
+                            ↑ Edit Your Input
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Usage Guide -->
+                <div class="usage-guide">
+                    <h3>How to Use This Prompt</h3>
+                    <ol>
+                        <li>Click <strong>"Copy to Clipboard"</strong> above</li>
+                        <li>Open your preferred AI tool:
+                            <ul>
+                                <li><a href="https://chat.openai.com" target="_blank" rel="noopener">ChatGPT</a></li>
+                                <li><a href="https://claude.ai" target="_blank" rel="noopener">Claude</a></li>
+                                <li><a href="https://gemini.google.com" target="_blank" rel="noopener">Gemini</a></li>
+                            </ul>
+                        </li>
+                        <li>Paste the prompt and send</li>
+                        <li>Review the AI's response</li>
+                    </ol>
+                </div>
+
+                <!-- Disclaimer -->
+                <div class="disclaimer">
+                    <h3>⚠️ Important Notice</h3>
+                    <ul>
+                        <li>AI responses are for reference only. Always verify with official sources.</li>
+                        <li>For cases requiring individual assessment, please contact the university directly.</li>
+                        <li>Before applying, always check the latest Admissions Handbook.</li>
+                    </ul>
+                    <p class="contact-link">
+                        Still have questions? <a href="https://en.ritsumei.ac.jp/e-ug/contact/" target="_blank" rel="noopener">Contact Us</a>
+                    </p>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>This tool generates prompts for AI assistants. It does not make eligibility decisions.</p>
+            <p>Official information: <a href="https://en.ritsumei.ac.jp/e-ug/" target="_blank" rel="noopener">Ritsumeikan University International Admissions</a></p>
+        </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast hidden">
+        Copied to clipboard!
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
