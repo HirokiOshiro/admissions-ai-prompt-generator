@@ -220,24 +220,43 @@ Please follow the rules below strictly when answering.
 
 ### Response Rules
 1. Base your answers ONLY on the "Official Information Sources" provided below
-2. For matters not explicitly stated in the sources, respond with: "This is not explicitly stated in the official information. Please contact the university directly for confirmation."
-3. NEVER make assumptions or base answers on general university admission practices
-4. Quote specific sections from the sources as evidence, including page numbers or section names
-5. Respond in English
+2. **CRITICAL: You must actually access and read the source documents.** Do NOT answer based on:
+   - Your general knowledge about universities or admissions
+   - Assumptions about what the documents might contain
+   - Information from other sources not listed below
+3. For matters not explicitly stated in the sources, respond with: "This is not explicitly stated in the official information. Please contact the university directly for confirmation."
+4. Quote specific sections as evidence with **exact page numbers, section titles, or paragraph references**. Vague citations like "according to the handbook" are NOT acceptable.
+5. If you cannot verify information from the actual document, clearly state: "I could not verify this in the source document."
+6. Respond in English
 
 ---
 
 ## Official Information Sources
 
+**⚠️ IMPORTANT: How to Access These Sources**
+Use your web browsing or search capability to access these documents. Follow these steps:
+
+1. **First**: Try to directly access the URL and read the content
+2. **If direct access fails**: Search the web for the exact URL or document title to find cached/indexed versions
+3. **If still unavailable**: Search within the same domain (en.ritsumei.ac.jp) for related official pages
+4. **Last resort**: Clearly report which sources you could NOT access
+
 ${sourcesSection}
 
-Please refer to these sources and base your answers on their content.
+### ⚠️ Honesty About Source Access
+**You MUST be honest about what you can and cannot access.**
+- If you successfully read a PDF: Quote specific content with page numbers
+- If you can only access a web page summary: State this clearly
+- If you cannot access a source at all: Do NOT guess its contents
 
-### ⚠️ If You Cannot Access the Sources
+### 🔄 If You Cannot Access the Sources
 If you cannot access the URLs above or cannot read their content:
-1. Tell me: "I cannot access the URL. Please upload the PDF."
-2. I will upload the Admissions Handbook PDF
-3. Then please answer my question based on the uploaded document
+1. **First, try alternative methods:**
+   - Search the web for: "Ritsumeikan University Admissions Handbook [current year]"
+   - Search within: en.ritsumei.ac.jp site for the relevant information
+2. **If still unsuccessful, clearly state:**
+   "I cannot access [specific source name]. Please upload the PDF directly."
+3. **Never pretend to have read a document you haven't accessed.**
 
 ---
 
@@ -267,11 +286,23 @@ ${questionText}
 
 Please structure your response as follows:
 
+### 0. Source Access Status (REQUIRED)
+**You MUST start your response with this section.**
+For each source listed above, report:
+- ✅ **Accessed**: [Source name] - Successfully read the document (specify: full PDF / web page only / cached version)
+- ❌ **Not Accessible**: [Source name] - Could not access (briefly state why)
+
+Example:
+> ✅ Accessed: Admissions Handbook - Successfully read full PDF (52 pages)
+> ❌ Not Accessible: Application Procedures page - URL returned 404 error
+
+**If you could not access the main source (Admissions Handbook), clearly state this and ask for the PDF to be uploaded before proceeding.**
+
 ### 1. Answer
-(Direct answer to the question)
+(Direct answer to the question - ONLY if you successfully accessed the relevant sources)
 
 ### 2. Evidence
-(Quote relevant sections from the official information, including page numbers or section names)
+(Quote relevant sections with **exact page numbers and section titles**. Example: "Page 12, Section 3.2: 'Applicants must submit...'")
 
 ### 3. Additional Notes
 (Any related information or points to consider)
@@ -282,25 +313,34 @@ Please structure your response as follows:
 
 function buildSourcesSection() {
     let sources = [];
-    
+
     // Add handbook if URL is provided
     if (currentSources.handbook.url) {
-        sources.push(`### ${currentSources.handbook.label} (Main Source)\n${currentSources.handbook.url}`);
+        const handbookEntry = `#### ${currentSources.handbook.label} (Main Source)
+- **URL**: ${currentSources.handbook.url}
+- **Alternative search**: "Ritsumeikan University Admissions Handbook PDF"
+- **Related page**: https://en.ritsumei.ac.jp/e-ug/apply/`;
+        sources.push(handbookEntry);
     }
-    
+
     // Add application page if URL is provided
     if (currentSources.applicationPage.url) {
-        sources.push(`### ${currentSources.applicationPage.label}\n${currentSources.applicationPage.url}`);
+        const appPageEntry = `#### ${currentSources.applicationPage.label}
+- **URL**: ${currentSources.applicationPage.url}
+- **Alternative search**: "Ritsumeikan University application procedures English"`;
+        sources.push(appPageEntry);
     }
-    
+
     // Add additional sources
     currentSources.additional.forEach((source, index) => {
         if (source.url) {
             const label = source.label || `Additional Source ${index + 1}`;
-            sources.push(`### ${label}\n${source.url}`);
+            const additionalEntry = `#### ${label}
+- **URL**: ${source.url}`;
+            sources.push(additionalEntry);
         }
     });
-    
+
     return sources.join('\n\n');
 }
 

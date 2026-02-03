@@ -16,6 +16,13 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 - **One-click copy**: Copy to clipboard and paste into your preferred AI
 - **AI service quick-launch**: Direct buttons for ChatGPT, Claude, and Gemini
 
+### Smart Source Access (v1.4.0)
+
+- **Source Access Status reporting**: AI must explicitly report which sources it accessed before answering
+- **Alternative search fallback**: If AI cannot access PDF directly, prompts include web search suggestions
+- **Hallucination prevention**: Strict rules prevent AI from guessing or fabricating information
+- **Multi-AI compatibility**: Works with ChatGPT, Claude, Gemini, Microsoft Copilot, and more
+
 ### User Experience
 - **Progress bar**: 4-step visual indicator (Your Info → Question → Sources → Result)
 - **Auto-save**: Your inputs are automatically saved and restored
@@ -85,11 +92,13 @@ open index.html
 
 ## 📋 Version History
 
-**Current Version: v1.3.2** (January 31, 2026)
+**Current Version: v1.4.0** (February 3, 2026)
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Updates
+
+- v1.4.0: Smart source access with fallback search, hallucination prevention, Source Access Status reporting
 - v1.3.2: Improved privacy badge messaging ("Simple & Safe", tool-focused explanation)
 - v1.3.1: User guide, privacy notice, version display
 - v1.3.0: Reset buttons, customizable information sources

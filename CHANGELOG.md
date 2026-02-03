@@ -7,10 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned for v1.4.0
+### Planned
 - Dark mode support
 - Searchable nationality dropdown
 - Additional accessibility improvements
+
+## [1.4.0] - 2026-02-03
+
+### Added
+- **Source Access Status section** (Section 0) in generated prompts
+  - AI must report access status for each source before answering
+  - Uses ✅/❌ indicators to clearly show what was accessible
+  - Prevents AI from answering without actually reading sources
+- **Alternative search keywords** for each source in generated prompts
+  - Helps AI find documents via web search if direct URL fails
+  - Related page URLs provided as fallback
+- **Staged fallback instructions** for source access
+  - Step 1: Direct URL access
+  - Step 2: Web search for document title
+  - Step 3: Domain-specific search (en.ritsumei.ac.jp)
+  - Step 4: Clear reporting of inaccessible sources
+
+### Changed
+- **Response Rules strengthened** to prevent hallucination
+  - Added explicit requirement to actually access and read documents
+  - Prohibited answering based on general knowledge or assumptions
+  - Required exact page numbers and section titles for citations
+  - Added "I could not verify this" fallback language
+- **buildSourcesSection() output format** now includes:
+  - URL with bold label
+  - Alternative search query suggestion
+  - Related page link (for main sources)
+- **"If You Cannot Access" section** redesigned with multi-step approach
+  - Encourages alternative access methods before asking for upload
+  - Explicit warning against pretending to have read inaccessible documents
+
+### Improved
+- AI response accuracy by forcing explicit source verification
+- User confidence through transparent access status reporting
+- Compatibility with AI tools that have limited PDF reading capability (e.g., Microsoft Copilot)
+
+### Technical
+- Modified `generatePrompt()` function with enhanced instructions
+- Refactored `buildSourcesSection()` to output structured source entries
+- Added honesty-enforcement language throughout prompt template
 
 ## [1.3.2] - 2026-01-31
 
