@@ -92,12 +92,13 @@ open index.html
 
 ## 📋 Version History
 
-**Current Version: v1.4.0** (February 3, 2026)
+**Current Version: v1.5.0** (February 4, 2026)
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Updates
 
+- v1.5.0: Conditional school details for eligibility (school type, qualifications/certifications)
 - v1.4.0: Smart source access with fallback search, hallucination prevention, Source Access Status reporting
 - v1.3.2: Improved privacy badge messaging ("Simple & Safe", tool-focused explanation)
 - v1.3.1: User guide, privacy notice, version display

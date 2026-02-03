@@ -52,6 +52,11 @@ const sourceHandbookInput = document.getElementById('sourceHandbook');
 const sourceApplicationPageInput = document.getElementById('sourceApplicationPage');
 const additionalSourcesContainer = document.getElementById('additionalSourcesContainer');
 
+// Education details elements (conditional)
+const educationStatusSelect = document.getElementById('educationStatus');
+const schoolDetailsSection = document.getElementById('schoolDetailsSection');
+const schoolTypeSelect = document.getElementById('schoolType');
+
 // ========================================
 // Event Listeners
 // ========================================
@@ -92,6 +97,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Source URL input listeners
     sourceHandbookInput.addEventListener('input', saveSourcesData);
     sourceApplicationPageInput.addEventListener('input', saveSourcesData);
+
+    // Education status change listener (for conditional fields)
+    educationStatusSelect.addEventListener('change', handleEducationStatusChange);
+
+    // Initialize conditional section visibility based on saved data
+    handleEducationStatusChange();
 });
 
 // ========================================
@@ -174,23 +185,53 @@ function handleCountryOfResidenceChange() {
     }
 }
 
+function handleEducationStatusChange() {
+    const status = educationStatusSelect.value;
+    const isHighSchool = status.toLowerCase().includes('high school') ||
+                         status.toLowerCase().includes('non-traditional');
+
+    if (isHighSchool && status !== '') {
+        schoolDetailsSection.classList.remove('hidden');
+    } else {
+        schoolDetailsSection.classList.add('hidden');
+        // Clear values when hidden
+        if (schoolTypeSelect) {
+            schoolTypeSelect.value = '';
+        }
+        // Uncheck all qualification checkboxes
+        const qualificationCheckboxes = document.querySelectorAll('input[name="qualification"]');
+        qualificationCheckboxes.forEach(cb => cb.checked = false);
+    }
+}
+
+function getSelectedQualifications() {
+    const checkboxes = document.querySelectorAll('input[name="qualification"]:checked');
+    return Array.from(checkboxes).map(cb => cb.value);
+}
+
 // ========================================
 // Data Collection
 // ========================================
 function collectFormData() {
-    const nationality = nationalitySelect.value === 'Other' 
-        ? nationalityOther.value 
+    const nationality = nationalitySelect.value === 'Other'
+        ? nationalityOther.value
         : nationalitySelect.value;
 
-    const countryOfResidence = countryOfResidenceSelect.value === 'Other' 
-        ? countryOfResidenceOther.value 
+    const countryOfResidence = countryOfResidenceSelect.value === 'Other'
+        ? countryOfResidenceOther.value
         : countryOfResidenceSelect.value;
+
+    const educationStatus = document.getElementById('educationStatus').value;
+    const isHighSchoolRelated = educationStatus.toLowerCase().includes('high school') ||
+                                educationStatus.toLowerCase().includes('non-traditional');
 
     return {
         program: document.getElementById('program').value,
         nationality: nationality,
         countryOfResidence: countryOfResidence,
-        educationStatus: document.getElementById('educationStatus').value,
+        educationStatus: educationStatus,
+        schoolType: isHighSchoolRelated ? (schoolTypeSelect?.value || '') : '',
+        qualifications: isHighSchoolRelated ? getSelectedQualifications() : [],
         educationYears: document.getElementById('educationYears').value,
         categories: getSelectedCategories(),
         specificQuestion: document.getElementById('specificQuestion').value.trim()
@@ -211,6 +252,9 @@ function generatePrompt(data) {
 
     // Build sources section dynamically
     const sourcesSection = buildSourcesSection();
+
+    // Build education details rows (conditional)
+    const educationDetailsRows = buildEducationDetailsRows(data);
 
     return `# Question about Ritsumeikan University International Admissions
 
@@ -268,7 +312,7 @@ If you cannot access the URLs above or cannot read their content:
 | Country/Region of Citizenship | ${data.nationality} |
 | Country/Region of Residence | ${data.countryOfResidence} |
 | Educational Status | ${data.educationStatus} |
-| Years of Education | ${data.educationYears} years |
+${educationDetailsRows}| Years of Education | ${data.educationYears} years |
 
 ---
 
@@ -342,6 +386,22 @@ function buildSourcesSection() {
     });
 
     return sources.join('\n\n');
+}
+
+function buildEducationDetailsRows(data) {
+    let rows = '';
+
+    // Only add these rows if school type or qualifications are provided
+    if (data.schoolType) {
+        rows += `| Type of School | ${data.schoolType} |\n`;
+    }
+
+    if (data.qualifications && data.qualifications.length > 0) {
+        const qualText = data.qualifications.join(', ');
+        rows += `| Qualification/Certification | ${qualText} |\n`;
+    }
+
+    return rows;
 }
 
 // ========================================
@@ -450,6 +510,8 @@ function saveFormData() {
             countryOfResidence: countryOfResidenceSelect.value,
             countryOfResidenceOther: countryOfResidenceOther.value,
             educationStatus: document.getElementById('educationStatus').value,
+            schoolType: schoolTypeSelect ? schoolTypeSelect.value : '',
+            qualifications: getSelectedQualifications(),
             educationYears: document.getElementById('educationYears').value,
             categories: getSelectedCategories(),
             specificQuestion: document.getElementById('specificQuestion').value,
@@ -494,6 +556,19 @@ function loadSavedData() {
         }
         if (data.educationStatus) {
             document.getElementById('educationStatus').value = data.educationStatus;
+            // Trigger the conditional section visibility
+            handleEducationStatusChange();
+        }
+        if (data.schoolType && schoolTypeSelect) {
+            schoolTypeSelect.value = data.schoolType;
+        }
+        if (data.qualifications && data.qualifications.length > 0) {
+            data.qualifications.forEach(qual => {
+                const checkbox = document.querySelector(`input[name="qualification"][value="${qual}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
         }
         if (data.educationYears) {
             document.getElementById('educationYears').value = data.educationYears;
@@ -560,6 +635,16 @@ function resetStep1() {
     document.getElementById('educationStatus').value = '';
     document.getElementById('educationYears').value = '';
 
+    // Reset conditional education fields
+    if (schoolTypeSelect) {
+        schoolTypeSelect.value = '';
+    }
+    const qualificationCheckboxes = document.querySelectorAll('input[name="qualification"]');
+    qualificationCheckboxes.forEach(cb => cb.checked = false);
+    if (schoolDetailsSection) {
+        schoolDetailsSection.classList.add('hidden');
+    }
+
     // Clear Step 1 data from localStorage
     try {
         const savedData = localStorage.getItem(CONFIG.storageKey);
@@ -571,6 +656,8 @@ function resetStep1() {
             data.countryOfResidence = '';
             data.countryOfResidenceOther = '';
             data.educationStatus = '';
+            data.schoolType = '';
+            data.qualifications = [];
             data.educationYears = '';
             localStorage.setItem(CONFIG.storageKey, JSON.stringify(data));
         }

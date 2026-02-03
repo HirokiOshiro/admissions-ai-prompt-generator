@@ -10,7 +10,7 @@
     <div class="container">
         <!-- Header -->
         <header class="header">
-            <h1>Ritsumeikan | English-medium Undergraduate Programs</h1>
+            <h1>Ritsumeikan<br>English-medium Undergraduate Programs</h1>
             <p class="subtitle">AI Prompt Generator</p>
             <p class="description">
                 Generate an optimized prompt to ask AI about your admissions questions.
@@ -184,8 +184,58 @@
                             <option value="University/College student">University/College student</option>
                             <option value="University/College graduate">University/College graduate</option>
                             <option value="Graduate school student/graduate">Graduate school student/graduate</option>
-                            <option value="Other (e.g., withdrawn, transferred)">Other (e.g., withdrawn, transferred)</option>
+                            <option value="Other (non-traditional pathway)">Other (non-traditional pathway)</option>
                         </select>
+                    </div>
+
+                    <!-- Conditional: School Details (shown for high school options) -->
+                    <div id="schoolDetailsSection" class="conditional-section hidden">
+                        <div class="conditional-section-header">
+                            <span class="info-icon">ℹ️</span>
+                            <span>Please provide additional details about your school</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="schoolType">Type of School</label>
+                            <select id="schoolType" name="schoolType">
+                                <option value="">-- Select school type --</option>
+                                <option value="Regular high school">Regular high school (following national curriculum)</option>
+                                <option value="International school">International school</option>
+                                <option value="Vocational/Technical school">Vocational/Technical school</option>
+                                <option value="Online/Distance learning school">Online/Distance learning school</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label id="qualificationLabel">Qualification/Certification <span class="label-hint">(Select all that apply)</span></label>
+                            <div class="checkbox-group qualification-checkboxes" role="group" aria-labelledby="qualificationLabel">
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="IB Diploma">
+                                    <span class="checkbox-label">IB Diploma (International Baccalaureate)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="A-Level">
+                                    <span class="checkbox-label">A-Level / AS-Level</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="International accreditation (WASC, CIS, ACSI, etc.)">
+                                    <span class="checkbox-label">International accreditation (WASC, CIS, ACSI, etc.)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="National accreditation only">
+                                    <span class="checkbox-label">National accreditation only (from country of study)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="High school equivalency (GED, 高卒認定, etc.)">
+                                    <span class="checkbox-label">High school equivalency (GED, 高卒認定, etc.)</span>
+                                </label>
+                                <label class="checkbox-item">
+                                    <input type="checkbox" name="qualification" value="Not sure">
+                                    <span class="checkbox-label">Not sure / Don't know</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -442,9 +492,9 @@
             </div>
             
             <div class="footer-meta">
-                <span class="version">Version 1.4.0</span>
+                <span class="version">Version 1.5.0</span>
                 <span class="separator">|</span>
-                <span class="last-updated">Last updated: February 3, 2026</span>
+                <span class="last-updated">Last updated: February 4, 2026</span>
             </div>
         </footer>
     </div>

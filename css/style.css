@@ -1380,3 +1380,99 @@ textarea {
         align-self: flex-end;
     }
 }
+
+/* ========================================
+   Conditional Section (School Details)
+======================================== */
+.conditional-section {
+    background-color: #f8fafc;
+    border: 1px solid var(--border-color);
+    border-left: 4px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-top: var(--spacing-md);
+    animation: slideDown 0.3s ease-out;
+}
+
+.conditional-section-header {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-md);
+    color: var(--secondary-color);
+    font-size: 0.9rem;
+}
+
+.conditional-section-header .info-icon {
+    font-size: 1.1rem;
+}
+
+.conditional-section .form-group {
+    margin-bottom: var(--spacing-md);
+}
+
+.conditional-section .form-group:last-child {
+    margin-bottom: 0;
+}
+
+/* Qualification Checkboxes */
+.qualification-checkboxes {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+    cursor: pointer;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius);
+    transition: background-color 0.2s ease;
+}
+
+.checkbox-item:hover {
+    background-color: #edf2f7;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-item .checkbox-label {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.4;
+}
+
+/* Slide down animation for conditional section */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile responsive for conditional section */
+@media (max-width: 480px) {
+    .conditional-section {
+        padding: var(--spacing-md);
+    }
+
+    .checkbox-item {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    .checkbox-item .checkbox-label {
+        font-size: 0.9rem;
+    }
+}

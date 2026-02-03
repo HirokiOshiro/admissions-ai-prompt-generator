@@ -12,6 +12,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Searchable nationality dropdown
 - Additional accessibility improvements
 
+## [1.5.0] - 2026-02-04
+
+### Added
+- **Conditional School Details section** for improved eligibility assessment
+  - Appears when selecting high school or non-traditional educational status
+  - **School Type** selector: Regular high school, International school, Vocational/Technical, Online/Distance, Other
+  - **Qualification/Certification** multi-select: IB Diploma, A-Level, International accreditation (WASC, CIS, ACSI), National accreditation, High school equivalency (GED, 高卒認定)
+- **"Other (non-traditional pathway)"** option for Educational Status
+  - Captures students with high school equivalency certificates, GED, etc.
+- Generated prompts now include school type and qualifications in Applicant Information table
+  - Enables AI to assess eligibility more accurately based on specific credentials
+
+### Changed
+- Educational Status option "Other (e.g., withdrawn, transferred)" renamed to "Other (non-traditional pathway)"
+- LocalStorage now saves and restores school type and qualifications
+
+### Improved
+- Eligibility assessment accuracy by capturing school type and international accreditation status
+- User experience with clear conditional UI that only appears when relevant
+- Data collection for international school students and non-traditional education pathways
+
+### Technical
+- Added `handleEducationStatusChange()` function for conditional section visibility
+- Added `getSelectedQualifications()` function for multi-select checkbox handling
+- Added `buildEducationDetailsRows()` function for dynamic prompt generation
+- Updated `collectFormData()`, `saveFormData()`, `loadSavedData()`, and `resetStep1()` functions
+- New CSS styles for `.conditional-section` and `.qualification-checkboxes`
+
 ## [1.4.0] - 2026-02-03
 
 ### Added
