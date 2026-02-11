@@ -108,17 +108,66 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="program">Desired Program</label>
-                        <select id="program" name="program" required aria-required="true">
-                            <option value="">-- Select a program --</option>
-                            <option value="GLA">GLA (College of Global Liberal Arts)</option>
-                            <option value="JDP">JDP (American University - Ritsumeikan University Joint Degree Program)</option>
-                            <option value="GS">GS (Global Studies Major)</option>
-                            <option value="CRPS">CRPS (Community and Regional Policy Studies Major)</option>
-                            <option value="ISSE">ISSE (Information Systems Science and Engineering Course)</option>
-                            <option value="Other">Other program</option>
-                            <option value="Undecided">Undecided / Exploring options</option>
-                        </select>
+                        <label id="program-label">Desired Program <span class="label-hint">(Select all that apply)</span></label>
+                        <div class="program-grid" role="group" aria-labelledby="program-label">
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="GLA">
+                                <div class="card-content">
+                                    <span class="card-icon">🌍</span>
+                                    <span class="card-label">GLA</span>
+                                    <span class="card-subtext">Global Liberal Arts</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="JDP">
+                                <div class="card-content">
+                                    <span class="card-icon">🤝</span>
+                                    <span class="card-label">JDP</span>
+                                    <span class="card-subtext">AU x Ritsumeikan</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="GS">
+                                <div class="card-content">
+                                    <span class="card-icon">🧭</span>
+                                    <span class="card-label">GS</span>
+                                    <span class="card-subtext">Global Studies</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="CRPS">
+                                <div class="card-content">
+                                    <span class="card-icon">🏛️</span>
+                                    <span class="card-label">CRPS</span>
+                                    <span class="card-subtext">Community & Policy</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="ISSE">
+                                <div class="card-content">
+                                    <span class="card-icon">💻</span>
+                                    <span class="card-label">ISSE</span>
+                                    <span class="card-subtext">Info Systems</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="Other">
+                                <div class="card-content">
+                                    <span class="card-icon">➕</span>
+                                    <span class="card-label">Other</span>
+                                    <span class="card-subtext">Different program</span>
+                                </div>
+                            </label>
+                            <label class="program-card">
+                                <input type="checkbox" name="program" value="Undecided">
+                                <div class="card-content">
+                                    <span class="card-icon">🔎</span>
+                                    <span class="card-label">Undecided</span>
+                                    <span class="card-subtext">Exploring options</span>
+                                </div>
+                            </label>
+                        </div>
+                        <p class="error-message hidden" id="programError" role="alert">Please select at least one program.</p>
                     </div>
 
                     <div class="form-group">
@@ -239,10 +288,34 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="educationYears">Total Years of Education</label>
-                        <div class="input-with-hint">
-                            <input type="number" id="educationYears" name="educationYears" 
-                                   min="8" max="25" placeholder="e.g., 12" required>
+                        <label id="education-years-label">Total Years of Education</label>
+                        <div class="years-grid" role="group" aria-labelledby="education-years-label">
+                            <label class="years-card">
+                                <input type="radio" name="educationYearsChoice" value="12" required>
+                                <div class="card-content">
+                                    <span class="card-label">12 years</span>
+                                    <span class="card-subtext">Most common</span>
+                                </div>
+                            </label>
+                            <label class="years-card">
+                                <input type="radio" name="educationYearsChoice" value="11">
+                                <div class="card-content">
+                                    <span class="card-label">11 years</span>
+                                    <span class="card-subtext">Also common</span>
+                                </div>
+                            </label>
+                            <label class="years-card">
+                                <input type="radio" name="educationYearsChoice" value="Other">
+                                <div class="card-content">
+                                    <span class="card-label">Other</span>
+                                    <span class="card-subtext">Provide details</span>
+                                </div>
+                            </label>
+                        </div>
+                        <p class="error-message hidden" id="educationYearsError" role="alert">Please select a total years of education option.</p>
+                        <div class="input-with-hint hidden" id="educationYearsOtherWrapper">
+                            <input type="text" id="educationYearsOther" name="educationYearsOther" 
+                                   placeholder="e.g., 10, 12.5, 11 (plus foundation)">
                             <span class="hint">From elementary school to current/final education</span>
                         </div>
                     </div>

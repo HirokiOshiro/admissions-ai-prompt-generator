@@ -477,8 +477,83 @@ textarea {
     color: var(--text-color);
 }
 
+.card-subtext {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    text-align: center;
+    margin-top: 0.2rem;
+}
+
 /* Selected indicator */
 .category-card input:checked + .card-content::after {
+    content: "✓";
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    font-size: 0.75rem;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+/* ========================================
+   Program + Education Years Cards
+======================================== */
+.program-grid,
+.years-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.program-card,
+.years-card {
+    position: relative;
+    cursor: pointer;
+}
+
+.program-card input[type="checkbox"],
+.years-card input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.program-card .card-content,
+.years-card .card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md);
+    background: var(--background-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius);
+    transition: all 0.2s ease;
+    min-height: 90px;
+}
+
+.program-card:hover .card-content,
+.years-card:hover .card-content {
+    border-color: var(--primary-color);
+    background: #fff5f5;
+}
+
+.program-card input:checked + .card-content,
+.years-card input:checked + .card-content {
+    border-color: var(--primary-color);
+    background: #fff5f5;
+    box-shadow: 0 0 0 2px rgba(139, 0, 0, 0.2);
+}
+
+.program-card input:focus + .card-content,
+.years-card input:focus + .card-content {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+.program-card input:checked + .card-content::after,
+.years-card input:checked + .card-content::after {
     content: "✓";
     position: absolute;
     top: 4px;

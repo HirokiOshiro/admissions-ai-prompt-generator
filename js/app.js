@@ -42,6 +42,11 @@ const nationalityOther = document.getElementById('nationalityOther');
 const countryOfResidenceSelect = document.getElementById('countryOfResidence');
 const countryOfResidenceOther = document.getElementById('countryOfResidenceOther');
 const categoryError = document.getElementById('categoryError');
+const programError = document.getElementById('programError');
+const educationYearsError = document.getElementById('educationYearsError');
+
+const educationYearsOtherWrapper = document.getElementById('educationYearsOtherWrapper');
+const educationYearsOtherInput = document.getElementById('educationYearsOther');
 
 // Progress bar elements
 const progressSteps = document.querySelectorAll('.progress-step');
@@ -101,8 +106,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Education status change listener (for conditional fields)
     educationStatusSelect.addEventListener('change', handleEducationStatusChange);
 
+    // Education years choice change listener
+    const educationYearsOptions = document.querySelectorAll('input[name="educationYearsChoice"]');
+    educationYearsOptions.forEach(option => {
+        option.addEventListener('change', handleEducationYearsChoiceChange);
+    });
+
     // Initialize conditional section visibility based on saved data
     handleEducationStatusChange();
+    handleEducationYearsChoiceChange();
 });
 
 // ========================================
@@ -110,6 +122,32 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================================
 function handleFormSubmit(e) {
     e.preventDefault();
+
+    // Validate programs
+    const programs = getSelectedPrograms();
+    if (programs.length === 0) {
+        programError.classList.remove('hidden');
+        updateProgress(1);
+        return;
+    }
+    programError.classList.add('hidden');
+
+    // Validate education years (Other requires details)
+    const educationYearsChoice = getEducationYearsChoice();
+    if (!educationYearsChoice) {
+        educationYearsError.classList.remove('hidden');
+        updateProgress(1);
+        return;
+    }
+    educationYearsError.classList.add('hidden');
+
+    if (educationYearsChoice === 'Other' && !educationYearsOtherInput.value.trim()) {
+        educationYearsOtherWrapper.classList.remove('hidden');
+        educationYearsOtherInput.required = true;
+        educationYearsOtherInput.focus();
+        updateProgress(1);
+        return;
+    }
 
     // Validate categories
     const categories = getSelectedCategories();
@@ -204,9 +242,32 @@ function handleEducationStatusChange() {
     }
 }
 
+function handleEducationYearsChoiceChange() {
+    const choice = getEducationYearsChoice();
+    educationYearsError.classList.add('hidden');
+    if (choice === 'Other') {
+        educationYearsOtherWrapper.classList.remove('hidden');
+        educationYearsOtherInput.required = true;
+    } else {
+        educationYearsOtherWrapper.classList.add('hidden');
+        educationYearsOtherInput.required = false;
+        educationYearsOtherInput.value = '';
+    }
+}
+
 function getSelectedQualifications() {
     const checkboxes = document.querySelectorAll('input[name="qualification"]:checked');
     return Array.from(checkboxes).map(cb => cb.value);
+}
+
+function getSelectedPrograms() {
+    const checkboxes = document.querySelectorAll('input[name="program"]:checked');
+    return Array.from(checkboxes).map(cb => cb.value);
+}
+
+function getEducationYearsChoice() {
+    const selected = document.querySelector('input[name="educationYearsChoice"]:checked');
+    return selected ? selected.value : '';
 }
 
 // ========================================
@@ -225,14 +286,22 @@ function collectFormData() {
     const isHighSchoolRelated = educationStatus.toLowerCase().includes('high school') ||
                                 educationStatus.toLowerCase().includes('non-traditional');
 
+    const programs = getSelectedPrograms();
+    const educationYearsChoice = getEducationYearsChoice();
+    const educationYears = educationYearsChoice === 'Other'
+        ? educationYearsOtherInput.value.trim()
+        : educationYearsChoice;
+
     return {
-        program: document.getElementById('program').value,
+        program: programs.join(', '),
+        programs: programs,
         nationality: nationality,
         countryOfResidence: countryOfResidence,
         educationStatus: educationStatus,
         schoolType: isHighSchoolRelated ? (schoolTypeSelect?.value || '') : '',
         qualifications: isHighSchoolRelated ? getSelectedQualifications() : [],
-        educationYears: document.getElementById('educationYears').value,
+        educationYears: educationYears,
+        educationYearsChoice: educationYearsChoice,
         categories: getSelectedCategories(),
         specificQuestion: document.getElementById('specificQuestion').value.trim()
     };
@@ -463,7 +532,7 @@ function updateProgress(step) {
 
 function trackFormProgress() {
     // Step 1 fields
-    const step1Fields = ['program', 'nationality', 'countryOfResidence', 'educationStatus', 'educationYears'];
+    const step1Fields = ['nationality', 'countryOfResidence', 'educationStatus'];
     // Step 2 fields
     const step2Container = document.querySelector('.form-section:nth-of-type(2)');
     // Step 3 fields (Sources)
@@ -475,6 +544,23 @@ function trackFormProgress() {
             field.addEventListener('focus', () => updateProgress(1));
         }
     });
+
+    const programCheckboxes = document.querySelectorAll('input[name="program"]');
+    programCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            programError.classList.add('hidden');
+            updateProgress(1);
+        });
+    });
+
+    const educationYearsOptions = document.querySelectorAll('input[name="educationYearsChoice"]');
+    educationYearsOptions.forEach(option => {
+        option.addEventListener('change', () => updateProgress(1));
+    });
+
+    if (educationYearsOtherInput) {
+        educationYearsOtherInput.addEventListener('focus', () => updateProgress(1));
+    }
 
     if (step2Container) {
         step2Container.addEventListener('focusin', () => updateProgress(2));
@@ -504,7 +590,7 @@ function trackFormProgress() {
 function saveFormData() {
     try {
         const data = {
-            program: document.getElementById('program').value,
+            programs: getSelectedPrograms(),
             nationality: nationalitySelect.value,
             nationalityOther: nationalityOther.value,
             countryOfResidence: countryOfResidenceSelect.value,
@@ -512,7 +598,8 @@ function saveFormData() {
             educationStatus: document.getElementById('educationStatus').value,
             schoolType: schoolTypeSelect ? schoolTypeSelect.value : '',
             qualifications: getSelectedQualifications(),
-            educationYears: document.getElementById('educationYears').value,
+            educationYearsChoice: getEducationYearsChoice(),
+            educationYearsOther: educationYearsOtherInput.value,
             categories: getSelectedCategories(),
             specificQuestion: document.getElementById('specificQuestion').value,
             savedAt: new Date().toISOString()
@@ -531,8 +618,18 @@ function loadSavedData() {
         const data = JSON.parse(savedData);
         
         // Restore form fields
-        if (data.program) {
-            document.getElementById('program').value = data.program;
+        if (data.programs && data.programs.length > 0) {
+            data.programs.forEach(program => {
+                const checkbox = document.querySelector(`input[name="program"][value="${program}"]`);
+                if (checkbox) {
+                    checkbox.checked = true;
+                }
+            });
+        } else if (data.program) {
+            const legacyProgram = document.querySelector(`input[name="program"][value="${data.program}"]`);
+            if (legacyProgram) {
+                legacyProgram.checked = true;
+            }
         }
         if (data.nationality) {
             nationalitySelect.value = data.nationality;
@@ -570,8 +667,28 @@ function loadSavedData() {
                 }
             });
         }
-        if (data.educationYears) {
-            document.getElementById('educationYears').value = data.educationYears;
+        if (data.educationYearsChoice) {
+            const educationChoice = document.querySelector(`input[name="educationYearsChoice"][value="${data.educationYearsChoice}"]`);
+            if (educationChoice) {
+                educationChoice.checked = true;
+            }
+            if (data.educationYearsChoice === 'Other') {
+                educationYearsOtherWrapper.classList.remove('hidden');
+                educationYearsOtherInput.required = true;
+                educationYearsOtherInput.value = data.educationYearsOther || '';
+            }
+        } else if (data.educationYears) {
+            const legacyYears = String(data.educationYears).trim();
+            const legacyChoice = ['11', '12'].includes(legacyYears) ? legacyYears : 'Other';
+            const educationChoice = document.querySelector(`input[name="educationYearsChoice"][value="${legacyChoice}"]`);
+            if (educationChoice) {
+                educationChoice.checked = true;
+            }
+            if (legacyChoice === 'Other') {
+                educationYearsOtherWrapper.classList.remove('hidden');
+                educationYearsOtherInput.required = true;
+                educationYearsOtherInput.value = legacyYears;
+            }
         }
         if (data.categories && data.categories.length > 0) {
             data.categories.forEach(category => {
@@ -623,7 +740,9 @@ function clearSavedData() {
 // ========================================
 function resetStep1() {
     // Reset Step 1 form fields
-    document.getElementById('program').value = '';
+    const programCheckboxes = document.querySelectorAll('input[name="program"]');
+    programCheckboxes.forEach(cb => cb.checked = false);
+    programError.classList.add('hidden');
     nationalitySelect.value = '';
     nationalityOther.value = '';
     nationalityOther.classList.add('hidden');
@@ -633,7 +752,12 @@ function resetStep1() {
     countryOfResidenceOther.classList.add('hidden');
     countryOfResidenceOther.required = false;
     document.getElementById('educationStatus').value = '';
-    document.getElementById('educationYears').value = '';
+    const educationYearsOptions = document.querySelectorAll('input[name="educationYearsChoice"]');
+    educationYearsOptions.forEach(option => option.checked = false);
+    educationYearsError.classList.add('hidden');
+    educationYearsOtherInput.value = '';
+    educationYearsOtherInput.required = false;
+    educationYearsOtherWrapper.classList.add('hidden');
 
     // Reset conditional education fields
     if (schoolTypeSelect) {
@@ -650,6 +774,7 @@ function resetStep1() {
         const savedData = localStorage.getItem(CONFIG.storageKey);
         if (savedData) {
             const data = JSON.parse(savedData);
+            data.programs = [];
             data.program = '';
             data.nationality = '';
             data.nationalityOther = '';
@@ -658,6 +783,8 @@ function resetStep1() {
             data.educationStatus = '';
             data.schoolType = '';
             data.qualifications = [];
+            data.educationYearsChoice = '';
+            data.educationYearsOther = '';
             data.educationYears = '';
             localStorage.setItem(CONFIG.storageKey, JSON.stringify(data));
         }
