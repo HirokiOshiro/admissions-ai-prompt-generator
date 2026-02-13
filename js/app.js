@@ -61,6 +61,18 @@ const additionalSourcesContainer = document.getElementById('additionalSourcesCon
 const educationStatusSelect = document.getElementById('educationStatus');
 const schoolDetailsSection = document.getElementById('schoolDetailsSection');
 const schoolTypeSelect = document.getElementById('schoolType');
+const schoolTypeOtherDetailsSection = document.getElementById('schoolTypeOtherDetails');
+const qualificationUnknownDetailsSection = document.getElementById('qualificationUnknownDetails');
+
+const schoolOfficialNameInput = document.getElementById('schoolOfficialName');
+const schoolLocationCountryInput = document.getElementById('schoolLocationCountry');
+const schoolLocationCityInput = document.getElementById('schoolLocationCity');
+const curriculumNameInput = document.getElementById('curriculumName');
+
+const qualificationUnknownSchoolNameInput = document.getElementById('qualificationUnknownSchoolName');
+const qualificationUnknownLocationCountryInput = document.getElementById('qualificationUnknownLocationCountry');
+const qualificationUnknownLocationCityInput = document.getElementById('qualificationUnknownLocationCity');
+const qualificationUnknownCurriculumInput = document.getElementById('qualificationUnknownCurriculum');
 
 // ========================================
 // Event Listeners
@@ -106,6 +118,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Education status change listener (for conditional fields)
     educationStatusSelect.addEventListener('change', handleEducationStatusChange);
 
+    if (schoolTypeSelect) {
+        schoolTypeSelect.addEventListener('change', updateSchoolConditionalDetails);
+    }
+
+    const qualificationCheckboxes = document.querySelectorAll('input[name="qualification"]');
+    qualificationCheckboxes.forEach(cb => {
+        cb.addEventListener('change', updateSchoolConditionalDetails);
+    });
+
     // Education years choice change listener
     const educationYearsOptions = document.querySelectorAll('input[name="educationYearsChoice"]');
     educationYearsOptions.forEach(option => {
@@ -145,6 +166,11 @@ function handleFormSubmit(e) {
         educationYearsOtherWrapper.classList.remove('hidden');
         educationYearsOtherInput.required = true;
         educationYearsOtherInput.focus();
+        updateProgress(1);
+        return;
+    }
+
+    if (!validateSchoolContextFields()) {
         updateProgress(1);
         return;
     }
@@ -225,11 +251,11 @@ function handleCountryOfResidenceChange() {
 
 function handleEducationStatusChange() {
     const status = educationStatusSelect.value;
-    const isHighSchool = status.toLowerCase().includes('high school') ||
-                         status.toLowerCase().includes('non-traditional');
+    const isHighSchool = isHighSchoolRelatedStatus(status);
 
     if (isHighSchool && status !== '') {
         schoolDetailsSection.classList.remove('hidden');
+        updateSchoolConditionalDetails();
     } else {
         schoolDetailsSection.classList.add('hidden');
         // Clear values when hidden
@@ -239,6 +265,14 @@ function handleEducationStatusChange() {
         // Uncheck all qualification checkboxes
         const qualificationCheckboxes = document.querySelectorAll('input[name="qualification"]');
         qualificationCheckboxes.forEach(cb => cb.checked = false);
+        hideAndResetFieldGroup(
+            schoolTypeOtherDetailsSection,
+            [schoolOfficialNameInput, schoolLocationCountryInput, schoolLocationCityInput, curriculumNameInput]
+        );
+        hideAndResetFieldGroup(
+            qualificationUnknownDetailsSection,
+            [qualificationUnknownSchoolNameInput, qualificationUnknownLocationCountryInput, qualificationUnknownLocationCityInput, qualificationUnknownCurriculumInput]
+        );
     }
 }
 
@@ -258,6 +292,136 @@ function handleEducationYearsChoiceChange() {
 function getSelectedQualifications() {
     const checkboxes = document.querySelectorAll('input[name="qualification"]:checked');
     return Array.from(checkboxes).map(cb => cb.value);
+}
+
+function hasNotSureQualification() {
+    return getSelectedQualifications().includes('Not sure');
+}
+
+function isHighSchoolRelatedStatus(status) {
+    const normalizedStatus = (status || '').toLowerCase();
+    return normalizedStatus.includes('high school') || normalizedStatus.includes('non-traditional');
+}
+
+function hideAndResetFieldGroup(section, inputs) {
+    if (section) {
+        section.classList.add('hidden');
+    }
+    inputs.forEach(input => {
+        if (!input) return;
+        input.required = false;
+        input.value = '';
+    });
+}
+
+function showAndRequireFieldGroup(section, inputs) {
+    if (section) {
+        section.classList.remove('hidden');
+    }
+    inputs.forEach(input => {
+        if (!input) return;
+        input.required = true;
+    });
+}
+
+function updateSchoolConditionalDetails() {
+    if (!schoolDetailsSection || schoolDetailsSection.classList.contains('hidden')) {
+        return;
+    }
+
+    const isSchoolTypeOther = schoolTypeSelect && schoolTypeSelect.value === 'Other';
+    const notSureSelected = hasNotSureQualification();
+
+    if (isSchoolTypeOther) {
+        showAndRequireFieldGroup(
+            schoolTypeOtherDetailsSection,
+            [schoolOfficialNameInput, schoolLocationCountryInput, schoolLocationCityInput, curriculumNameInput]
+        );
+        hideAndResetFieldGroup(
+            qualificationUnknownDetailsSection,
+            [qualificationUnknownSchoolNameInput, qualificationUnknownLocationCountryInput, qualificationUnknownLocationCityInput, qualificationUnknownCurriculumInput]
+        );
+        return;
+    }
+
+    hideAndResetFieldGroup(
+        schoolTypeOtherDetailsSection,
+        [schoolOfficialNameInput, schoolLocationCountryInput, schoolLocationCityInput, curriculumNameInput]
+    );
+
+    if (notSureSelected) {
+        showAndRequireFieldGroup(
+            qualificationUnknownDetailsSection,
+            [qualificationUnknownSchoolNameInput, qualificationUnknownLocationCountryInput, qualificationUnknownLocationCityInput, qualificationUnknownCurriculumInput]
+        );
+    } else {
+        hideAndResetFieldGroup(
+            qualificationUnknownDetailsSection,
+            [qualificationUnknownSchoolNameInput, qualificationUnknownLocationCountryInput, qualificationUnknownLocationCityInput, qualificationUnknownCurriculumInput]
+        );
+    }
+}
+
+function getActiveSchoolContextFields() {
+    const isSchoolTypeOther = schoolTypeSelect && schoolTypeSelect.value === 'Other';
+    const notSureSelected = hasNotSureQualification();
+
+    if (isSchoolTypeOther) {
+        return [schoolOfficialNameInput, schoolLocationCountryInput, schoolLocationCityInput, curriculumNameInput];
+    }
+
+    if (notSureSelected) {
+        return [
+            qualificationUnknownSchoolNameInput,
+            qualificationUnknownLocationCountryInput,
+            qualificationUnknownLocationCityInput,
+            qualificationUnknownCurriculumInput
+        ];
+    }
+
+    return [];
+}
+
+function validateSchoolContextFields() {
+    const status = educationStatusSelect.value;
+    if (!isHighSchoolRelatedStatus(status)) {
+        return true;
+    }
+
+    const requiredFields = getActiveSchoolContextFields();
+    if (requiredFields.length === 0) {
+        return true;
+    }
+
+    for (const field of requiredFields) {
+        if (field && !field.value.trim()) {
+            showToast('Please enter school official name, country/city, and curriculum details.');
+            field.focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+
+function getSchoolContextDetails() {
+    const fields = getActiveSchoolContextFields();
+    if (fields.length === 0) {
+        return {
+            schoolOfficialName: '',
+            schoolLocationCountry: '',
+            schoolLocationCity: '',
+            curriculumName: ''
+        };
+    }
+
+    const [officialNameField, locationCountryField, locationCityField, curriculumField] = fields;
+    return {
+        schoolOfficialName: officialNameField ? officialNameField.value.trim() : '',
+        schoolLocationCountry: locationCountryField ? locationCountryField.value.trim() : '',
+        schoolLocationCity: locationCityField ? locationCityField.value.trim() : '',
+        curriculumName: curriculumField ? curriculumField.value.trim() : ''
+    };
 }
 
 function getSelectedPrograms() {
@@ -283,8 +447,8 @@ function collectFormData() {
         : countryOfResidenceSelect.value;
 
     const educationStatus = document.getElementById('educationStatus').value;
-    const isHighSchoolRelated = educationStatus.toLowerCase().includes('high school') ||
-                                educationStatus.toLowerCase().includes('non-traditional');
+    const isHighSchoolRelated = isHighSchoolRelatedStatus(educationStatus);
+    const schoolContextDetails = getSchoolContextDetails();
 
     const programs = getSelectedPrograms();
     const educationYearsChoice = getEducationYearsChoice();
@@ -300,6 +464,10 @@ function collectFormData() {
         educationStatus: educationStatus,
         schoolType: isHighSchoolRelated ? (schoolTypeSelect?.value || '') : '',
         qualifications: isHighSchoolRelated ? getSelectedQualifications() : [],
+        schoolOfficialName: isHighSchoolRelated ? schoolContextDetails.schoolOfficialName : '',
+        schoolLocationCountry: isHighSchoolRelated ? schoolContextDetails.schoolLocationCountry : '',
+        schoolLocationCity: isHighSchoolRelated ? schoolContextDetails.schoolLocationCity : '',
+        curriculumName: isHighSchoolRelated ? schoolContextDetails.curriculumName : '',
         educationYears: educationYears,
         educationYearsChoice: educationYearsChoice,
         categories: getSelectedCategories(),
@@ -332,19 +500,19 @@ You are an expert advisor on Ritsumeikan University's international admissions (
 Please follow the rules below strictly when answering.
 
 ### Response Rules
-1. Base your answers ONLY on the "Official Information Sources" provided below
+1. Base your answers ONLY on the "Information Sources" provided below
 2. **CRITICAL: You must actually access and read the source documents.** Do NOT answer based on:
    - Your general knowledge about universities or admissions
    - Assumptions about what the documents might contain
    - Information from other sources not listed below
-3. For matters not explicitly stated in the sources, respond with: "This is not explicitly stated in the official information. Please contact the university directly for confirmation."
+3. For matters not explicitly stated in the sources, respond with: "This is not explicitly stated in the provided sources. Please contact the university directly for confirmation."
 4. Quote specific sections as evidence with **exact page numbers, section titles, or paragraph references**. Vague citations like "according to the handbook" are NOT acceptable.
 5. If you cannot verify information from the actual document, clearly state: "I could not verify this in the source document."
 6. Respond in English
 
 ---
 
-## Official Information Sources
+## Information Sources (Default Official + User-Added)
 
 **⚠️ IMPORTANT: How to Access These Sources**
 Use your web browsing or search capability to access these documents. Follow these steps:
@@ -421,7 +589,7 @@ Example:
 (Any related information or points to consider)
 
 ### 4. Unclear Points
-(If anything cannot be determined from official sources, recommend contacting the university)`;
+(If anything cannot be determined from the provided sources, recommend contacting the university)`;
 }
 
 function buildSourcesSection() {
@@ -468,6 +636,19 @@ function buildEducationDetailsRows(data) {
     if (data.qualifications && data.qualifications.length > 0) {
         const qualText = data.qualifications.join(', ');
         rows += `| Qualification/Certification | ${qualText} |\n`;
+    }
+
+    if (data.schoolOfficialName) {
+        rows += `| School Official Name | ${data.schoolOfficialName} |\n`;
+    }
+
+    if (data.schoolLocationCountry || data.schoolLocationCity) {
+        const locationParts = [data.schoolLocationCity, data.schoolLocationCountry].filter(Boolean);
+        rows += `| School Location | ${locationParts.join(', ')} |\n`;
+    }
+
+    if (data.curriculumName) {
+        rows += `| Curriculum / Program Name | ${data.curriculumName} |\n`;
     }
 
     return rows;
@@ -598,6 +779,14 @@ function saveFormData() {
             educationStatus: document.getElementById('educationStatus').value,
             schoolType: schoolTypeSelect ? schoolTypeSelect.value : '',
             qualifications: getSelectedQualifications(),
+            schoolOfficialName: schoolOfficialNameInput ? schoolOfficialNameInput.value : '',
+            schoolLocationCountry: schoolLocationCountryInput ? schoolLocationCountryInput.value : '',
+            schoolLocationCity: schoolLocationCityInput ? schoolLocationCityInput.value : '',
+            curriculumName: curriculumNameInput ? curriculumNameInput.value : '',
+            qualificationUnknownSchoolName: qualificationUnknownSchoolNameInput ? qualificationUnknownSchoolNameInput.value : '',
+            qualificationUnknownLocationCountry: qualificationUnknownLocationCountryInput ? qualificationUnknownLocationCountryInput.value : '',
+            qualificationUnknownLocationCity: qualificationUnknownLocationCityInput ? qualificationUnknownLocationCityInput.value : '',
+            qualificationUnknownCurriculum: qualificationUnknownCurriculumInput ? qualificationUnknownCurriculumInput.value : '',
             educationYearsChoice: getEducationYearsChoice(),
             educationYearsOther: educationYearsOtherInput.value,
             categories: getSelectedCategories(),
@@ -667,6 +856,31 @@ function loadSavedData() {
                 }
             });
         }
+        if (schoolOfficialNameInput) {
+            schoolOfficialNameInput.value = data.schoolOfficialName || '';
+        }
+        if (schoolLocationCountryInput) {
+            schoolLocationCountryInput.value = data.schoolLocationCountry || '';
+        }
+        if (schoolLocationCityInput) {
+            schoolLocationCityInput.value = data.schoolLocationCity || '';
+        }
+        if (curriculumNameInput) {
+            curriculumNameInput.value = data.curriculumName || '';
+        }
+        if (qualificationUnknownSchoolNameInput) {
+            qualificationUnknownSchoolNameInput.value = data.qualificationUnknownSchoolName || '';
+        }
+        if (qualificationUnknownLocationCountryInput) {
+            qualificationUnknownLocationCountryInput.value = data.qualificationUnknownLocationCountry || '';
+        }
+        if (qualificationUnknownLocationCityInput) {
+            qualificationUnknownLocationCityInput.value = data.qualificationUnknownLocationCity || '';
+        }
+        if (qualificationUnknownCurriculumInput) {
+            qualificationUnknownCurriculumInput.value = data.qualificationUnknownCurriculum || '';
+        }
+        updateSchoolConditionalDetails();
         if (data.educationYearsChoice) {
             const educationChoice = document.querySelector(`input[name="educationYearsChoice"][value="${data.educationYearsChoice}"]`);
             if (educationChoice) {
@@ -768,6 +982,14 @@ function resetStep1() {
     if (schoolDetailsSection) {
         schoolDetailsSection.classList.add('hidden');
     }
+    hideAndResetFieldGroup(
+        schoolTypeOtherDetailsSection,
+        [schoolOfficialNameInput, schoolLocationCountryInput, schoolLocationCityInput, curriculumNameInput]
+    );
+    hideAndResetFieldGroup(
+        qualificationUnknownDetailsSection,
+        [qualificationUnknownSchoolNameInput, qualificationUnknownLocationCountryInput, qualificationUnknownLocationCityInput, qualificationUnknownCurriculumInput]
+    );
 
     // Clear Step 1 data from localStorage
     try {
@@ -783,6 +1005,14 @@ function resetStep1() {
             data.educationStatus = '';
             data.schoolType = '';
             data.qualifications = [];
+            data.schoolOfficialName = '';
+            data.schoolLocationCountry = '';
+            data.schoolLocationCity = '';
+            data.curriculumName = '';
+            data.qualificationUnknownSchoolName = '';
+            data.qualificationUnknownLocationCountry = '';
+            data.qualificationUnknownLocationCity = '';
+            data.qualificationUnknownCurriculum = '';
             data.educationYearsChoice = '';
             data.educationYearsOther = '';
             data.educationYears = '';

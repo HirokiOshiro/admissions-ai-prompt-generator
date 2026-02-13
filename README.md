@@ -4,15 +4,17 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 
 ## 🌐 Live Demo
 
-**https://hirokioshiro.github.io/admissions-ai-prompt-generator/**
+[https://hirokioshiro.github.io/admissions-ai-prompt-generator/](https://hirokioshiro.github.io/admissions-ai-prompt-generator/)
 
 ## ✨ Features
 
 ### Core Features
+
 - **Input your background**: Program, country/region of citizenship, country/region of residence, educational status, years of education
+- **Context enrichment for complex school cases**: When school type is "Other" or qualification is "Not sure", the form asks for school official name, country/city, and curriculum/program name
 - **Select question categories**: Visual cards with icons for eligibility, documents, English proficiency, scholarships, visa, and more
 - **Customize information sources**: Edit default sources or add your own URLs
-- **Generate structured prompts**: Optimized for AI tools to provide accurate answers based on official sources
+- **Generate structured prompts**: Optimized for AI tools to provide accurate answers based on the sources you specify
 - **One-click copy**: Copy to clipboard and paste into your preferred AI
 - **AI service quick-launch**: Direct buttons for ChatGPT, Claude, and Gemini
 
@@ -24,6 +26,7 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 - **Multi-AI compatibility**: Works with ChatGPT, Claude, Gemini, Microsoft Copilot, and more
 
 ### User Experience
+
 - **Progress bar**: 4-step visual indicator (Your Info → Question → Sources → Result)
 - **Auto-save**: Your inputs are automatically saved and restored
 - **Reset buttons**: Clear individual sections or all data
@@ -39,19 +42,22 @@ Generate optimized prompts to ask AI about Ritsumeikan University's internationa
 3. **Step 3 - Sources**: Review or customize the official information sources (optional)
 4. **Step 4 - Result**: Click **"Generate Prompt"** and copy the result
 5. Paste into [ChatGPT](https://chat.openai.com), [Claude](https://claude.ai), or [Gemini](https://gemini.google.com)
-6. Review the AI's response based on official information
+6. Review the AI's response based on the sources configured in Step 3
 
 > 💡 **Tip**: Your inputs are automatically saved in your browser, so you can return later without re-entering your information.
 
-## 📚 Official Information Sources
+## 📚 Information Sources
 
-The generated prompts direct AI to reference these official sources (customizable in Step 3):
+The generated prompts direct AI to reference the sources set in Step 3.
+Official university sources are pre-filled by default, and you can add more trusted sources when necessary.
 
 ### Default Sources
+
 - [Admissions Handbook (PDF)](https://en.ritsumei.ac.jp/e-ug/apply/aohb26.pdf)
 - [Application Procedures](https://en.ritsumei.ac.jp/e-ug/apply/howto.html/?version=English)
 
 ### Customization
+
 - Edit the default source URLs if newer versions are available
 - Add unlimited additional sources (faculty pages, scholarship info, etc.)
 - Reset to defaults anytime
@@ -78,7 +84,7 @@ open index.html
 
 ### Project Structure
 
-```
+```text
 ├── index.html          # Main HTML (4-step form with progress bar)
 ├── css/
 │   └── style.css       # Styles (1200+ lines, responsive, animations)

@@ -14,7 +14,7 @@
             <p class="subtitle">AI Prompt Generator</p>
             <p class="description">
                 Generate an optimized prompt to ask AI about your admissions questions.
-                The AI will answer based on official information sources.
+                The AI will answer based on the information sources you set (official sources are pre-filled by default).
             </p>
             
             <!-- Privacy Badge (Bottom Center) -->
@@ -58,7 +58,7 @@
                 </div>
                 <div class="guide-section">
                     <h4>Why use this tool?</h4>
-                    <p>The generated prompt instructs the AI to answer based on <strong>official university documents only</strong>, reducing the risk of incorrect information.</p>
+                    <p>The generated prompt prioritizes <strong>official university sources by default</strong>. You can also add trusted sources in Step 3 when needed.</p>
                 </div>
                 <div class="guide-section guide-note">
                     <p><strong>💡 Tip:</strong> Your inputs are automatically saved in your browser, so you can return later without re-entering your information.</p>
@@ -256,6 +256,32 @@
                             </select>
                         </div>
 
+                        <div id="schoolTypeOtherDetails" class="conditional-section hidden">
+                            <div class="form-group">
+                                <label for="schoolOfficialName">School Official Name</label>
+                                <input type="text" id="schoolOfficialName" name="schoolOfficialName"
+                                       placeholder="Enter the school's official name in English or local language">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="schoolLocationCountry">School Location (Country/Region)</label>
+                                <input type="text" id="schoolLocationCountry" name="schoolLocationCountry"
+                                       placeholder="e.g., Vietnam, India, Hong Kong (SAR)">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="schoolLocationCity">School Location (City)</label>
+                                <input type="text" id="schoolLocationCity" name="schoolLocationCity"
+                                       placeholder="e.g., Ho Chi Minh City, Delhi, Hong Kong">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="curriculumName">Curriculum / Program Name</label>
+                                <input type="text" id="curriculumName" name="curriculumName"
+                                       placeholder="e.g., National Upper Secondary Curriculum, Foundation + Grade 12">
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label id="qualificationLabel">Qualification/Certification <span class="label-hint">(Select all that apply)</span></label>
                             <div class="checkbox-group qualification-checkboxes" role="group" aria-labelledby="qualificationLabel">
@@ -283,6 +309,32 @@
                                     <input type="checkbox" name="qualification" value="Not sure">
                                     <span class="checkbox-label">Not sure / Don't know</span>
                                 </label>
+                            </div>
+                        </div>
+
+                        <div id="qualificationUnknownDetails" class="conditional-section hidden">
+                            <div class="form-group">
+                                <label for="qualificationUnknownSchoolName">School Official Name</label>
+                                <input type="text" id="qualificationUnknownSchoolName" name="qualificationUnknownSchoolName"
+                                       placeholder="Enter the school's official name in English or local language">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="qualificationUnknownLocationCountry">School Location (Country/Region)</label>
+                                <input type="text" id="qualificationUnknownLocationCountry" name="qualificationUnknownLocationCountry"
+                                       placeholder="e.g., Vietnam, India, Hong Kong (SAR)">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="qualificationUnknownLocationCity">School Location (City)</label>
+                                <input type="text" id="qualificationUnknownLocationCity" name="qualificationUnknownLocationCity"
+                                       placeholder="e.g., Ho Chi Minh City, Delhi, Hong Kong">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="qualificationUnknownCurriculum">Curriculum / Program Name</label>
+                                <input type="text" id="qualificationUnknownCurriculum" name="qualificationUnknownCurriculum"
+                                       placeholder="e.g., National Upper Secondary Curriculum, Technical Diploma Track">
                             </div>
                         </div>
                     </div>
@@ -430,7 +482,7 @@
                     </div>
                     
                     <p class="section-description">
-                        The AI will use these sources to answer your question. You can customize or add additional sources.
+                        The AI will prioritize these sources when answering your question. Official sources are pre-filled, and you can add additional trusted sources.
                     </p>
 
                     <!-- Default Sources -->
@@ -485,7 +537,7 @@
             <!-- Generated Prompt Section -->
             <section id="promptOutput" class="prompt-output hidden">
                 <h2 class="section-title">
-                    <span class="step-number">3</span>
+                    <span class="step-number">4</span>
                     Your Generated Prompt
                 </h2>
                 
