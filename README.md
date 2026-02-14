@@ -98,12 +98,13 @@ open index.html
 
 ## 📋 Version History
 
-**Current Version: v1.5.0** (February 4, 2026)
+**Current Version: v1.5.1** (February 14, 2026)
 
 See [CHANGELOG.md](CHANGELOG.md) for detailed version history.
 
 ### Recent Updates
 
+- v1.5.1: Ambiguous school/curriculum cases now require school official name, location (country/city), and curriculum/program name; source wording aligned to "default official + user-added sources" and step-number consistency updated
 - v1.5.0: Conditional school details for eligibility (school type, qualifications/certifications)
 - v1.4.0: Smart source access with fallback search, hallucination prevention, Source Access Status reporting
 - v1.3.2: Improved privacy badge messaging ("Simple & Safe", tool-focused explanation)
